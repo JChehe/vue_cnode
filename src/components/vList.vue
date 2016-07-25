@@ -1,8 +1,8 @@
 <template>
 	<div class="post-list">
 		<ul>
-			<li v-for="post in posts" :class="post.good ? 'top' : post.tab" :id="post.id" @click="getTopic(post.id)">
-				<h3 class="title"><span class="tab">{{tabToName(post)}}</span>{{post.title}}    {{post}}</h3>
+			<li v-for="post in posts" :class="post.good ? 'top' : (post.tab || 'unknow')" :id="post.id" @click="getTopic(post.id)">
+				<h3 class="title"><span class="tab">{{tabToName(post)}}</span>{{post.title}}    {{post.tab}}</h3>
 				<div class="info">
 					<div class="left">
 						<img :src="post.author.avatar_url" alt="">
@@ -62,7 +62,7 @@
 						case "ask": name = "问答"; break;
 						case "share": name = "分享"; break;
 						case "job": name = "招聘"; break;
-						default: name="未能识别"
+						default: name="未知"
 					}
 				}
 				return name;
@@ -118,6 +118,9 @@
   	 }
   	 .post-list .ask .tab{
   	 	background-color: #3498DB
+  	 }
+  	 .post-list .unknow .tab{
+  	 	background-color: gray
   	 }
   	 .left{
   	 	float: left;

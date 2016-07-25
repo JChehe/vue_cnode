@@ -49,12 +49,24 @@ export default{
 				}],[{
 					icon: "&#xe607;",
 					name: "消息",
-          view: "message"
+          view: "vmessage"
 				},{
 					icon: "&#xe608;",
 					name: "关于",
-          view: "about"
-				}]
+          view: "vabout"
+				}],[{
+          icon: "&#xe608;",
+          name: "个人信息",
+          view: "vperinfo"
+        },{
+          icon: "&#xe608;",
+          name: "登录",
+          view: "vlogin"
+        },{
+          icon: "&#xe608;",
+          name: "发帖",
+          view: "vnewpost"
+        }]
 			]
 		}
 	},
@@ -77,7 +89,8 @@ export default{
 		hide: function(){
 			this.isShowSidebar = false
 		},
-    changeView: function(){
+    changeView: function(view){
+      this.currentView = view
     },
     changeTab: function(tab){
       this.tab = tab;

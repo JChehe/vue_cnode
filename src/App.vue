@@ -3,10 +3,16 @@
     <vSidebar :is-show-sidebar.sync="isShowSidebar" :current-view.sync="currentView" :tab.sync="tab"></vSidebar>  
     <main>
       <vheader :title="title" :is-show-sidebar.sync="isShowSidebar"></vheader>
+      
       <div id="content">
         <component  :post-id.sync="postId" :is="currentView" :current-view.sync="currentView" :tab.sync="tab">
           <vlist></vlist>
           <vpost></vpost>
+          <vabout></vabout>
+          <vmessage></vmessage>  
+          <vlogin></vlogin>
+          <vperinfo></vperinfo>
+          <vnewpost></vnewpost>
         </component>
       </div>
     </main>
@@ -18,13 +24,23 @@ import vheader from './components/vHeader'
 import vsidebar from './components/vSidebar'
 import vlist from './components/vList'
 import vpost from './components/vPost'
+import vabout from './components/vAbout'
+import vmessage from './components/vMessage'
+import vperinfo from './components/vPerInfo'
+import vnewpost from './components/vNewPost'
+import vlogin from './components/vLogin'
 
 export default {
   components: {
     vheader: vheader,
     vsidebar: vsidebar,
     vlist: vlist,
-    vpost: vpost
+    vpost: vpost,
+    vabout: vabout,
+    vmessage: vmessage,
+    vperinfo: vperinfo,
+    vnewpost: vnewpost,
+    vlogin: vlogin
   },
   data: function(){
     return {
