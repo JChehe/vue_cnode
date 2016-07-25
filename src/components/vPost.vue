@@ -46,28 +46,24 @@
           _id: self.postId
         }, function(data){
           console.log(data)
+          data.data.replies.forEach(function(reply, index){
+            reply.isShowReply = false
+          })
           self.post = data.data
         })
 		},
     watch: {
       postId: function(){
-        console.log("ahhaa")
-        // var self = this;
-        // api.topic.getTopic({
-        //   _id: self.postId
-        // }, function(data){
-        //   console.log(data)
-        //   self.post = data.data
-        // })
+     
       }
     },
     methods:{
       tabToName: function(tab){
         var name = "";
         switch(tab) {
-          case "top": name = "置顶"; break;
+          case "good": name = "置顶"; break;
           case "ask": name = "问答"; break;
-          case "share": name = "置顶"; break;
+          case "share": name = "分享"; break;
           case "job": name = "招聘"; break;
           default: name="未能识别"
         }

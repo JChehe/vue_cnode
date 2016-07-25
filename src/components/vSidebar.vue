@@ -5,7 +5,7 @@
         <img src="//o4j806krb.qnssl.com/public/images/cnodejs_light.svg" alt="">
       </div>
       <ul v-for="items in itemSet">
-      	<li v-for="item in items">
+      	<li v-for="item in items" @click="changeView(item.view),changeTab(item.tab)">
       		<a href="javascript:;">
       			<i class="iconfont">{{{item.icon}}}</i>
 	      		{{item.name}}
@@ -23,25 +23,37 @@ export default{
 			itemSet:[
 				[{
 					icon: "&#xe602;",
-					name: "全部"
+					name: "全部",
+          view: "vlist",
+          tab: "all"
 				},{
 					icon: "&#xe605;",
-					name: "精华"
+					name: "精华",
+          view: "vlist",
+          tab: "good"
 				},{
 					icon: "&#xe600;",
-					name:"分享"
+					name:"分享",
+          view: "vlist",
+          tab: "share"
 				},{
 					icon: "&#xe608;",
-					name: "问答"
+					name: "问答",
+          view: "vlist",
+          tab: "ask"
 				},{
 					icon: "&#xe606;",
-					name: "招聘"
+					name: "招聘",
+          view: "vlist",
+          tab: "job"
 				}],[{
 					icon: "&#xe607;",
-					name: "消息"
+					name: "消息",
+          view: "message"
 				},{
 					icon: "&#xe608;",
-					name: "关于"
+					name: "关于",
+          view: "about"
 				}]
 			]
 		}
@@ -50,12 +62,26 @@ export default{
 		isShowSidebar:{
 			type:Boolean,
 			required: true
-		}
+		},
+    currentView: {
+      type: String,
+      required: true,
+      twoway: true
+    },
+    tab: {
+      type: String,
+      twoway: true
+    }
 	},
 	methods:{
 		hide: function(){
 			this.isShowSidebar = false
-		}
+		},
+    changeView: function(){
+    },
+    changeTab: function(tab){
+      this.tab = tab;
+    }
 	}
 }
 </script>

@@ -1,10 +1,10 @@
 <template>
-  <div id="app" :class="{ 'offcanvas-page': isShowSidebar, 'show-offcanvas': isShowSidebar}">
-    <vSidebar :is-show-sidebar.sync="isShowSidebar"></vSidebar>  
+  <div id="app" :class="{ 'offcanvas-page': isShowSidebar, 'show-offcanvas': isShowSidebar}" >
+    <vSidebar :is-show-sidebar.sync="isShowSidebar" :current-view.sync="currentView" :tab.sync="tab"></vSidebar>  
     <main>
       <vheader :title="title" :is-show-sidebar.sync="isShowSidebar"></vheader>
       <div id="content">
-        <component :is="currentView" :current-view.sync="currentView" :post-id.sync="postId">
+        <component  :post-id.sync="postId" :is="currentView" :current-view.sync="currentView" :tab.sync="tab">
           <vlist></vlist>
           <vpost></vpost>
         </component>
@@ -31,7 +31,8 @@ export default {
       title: "hahaha",
       isShowSidebar: false,
       currentView: "vlist",
-      postId: ""
+      postId: "",
+      tab: "all"
     }
   },
   watch:{

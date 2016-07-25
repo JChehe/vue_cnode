@@ -1,8 +1,8 @@
 <template>
 	<div class="post-list">
 		<ul>
-			<li v-for="post in posts" :class="post.tab" :id="post.id" @click="getTopic(post.id)">
-				<h3 class="title"><span class="tab">{{tabToName(post.tab)}}</span>{{post.title}}</h3>
+			<li v-for="post in posts" :class="post.good ? 'top' : post.tab" :id="post.id" @click="getTopic(post.id)">
+				<h3 class="title"><span class="tab">{{tabToName(post)}}</span>{{post.title}}    {{post}}</h3>
 				<div class="info">
 					<div class="left">
 						<img :src="post.author.avatar_url" alt="">
@@ -27,8 +27,7 @@
 	export default{
 		data: function(){
 			return{
-				posts: {},
-				post: {}
+				posts: []
 			}
 		},
 		props: {
@@ -38,33 +37,51 @@
 			},
 			postId: {
 				type: String
+			},
+			tab: {
+				type: String,
+				required: true,
+				default: "all"
 			}
 		},
 		created: function(){
-			var self = this;
-			api.topic.getTopicList({
-				page: 1,
-				limit: 20
-			}, function(data){
-				self.posts = data.data
-			})
+			this.getTopicList("all")
+		},
+		watch: {
+			tab: function(){
+				this.getTopicList(this.tab)
+			}
 		},
 		methods:{
-			tabToName: function(tab){
+			tabToName: function(post){
 				var name = "";
-				switch(tab) {
-					case "top": name = "置顶"; break;
-					case "ask": name = "问答"; break;
-					case "share": name = "置顶"; break;
-					case "job": name = "招聘"; break;
-					default: name="未能识别"
+				if(post.good == true){
+					name = "精华"
+				}else{
+					switch(post.tab) {
+						case "ask": name = "问答"; break;
+						case "share": name = "分享"; break;
+						case "job": name = "招聘"; break;
+						default: name="未能识别"
+					}
 				}
 				return name;
 			},
 			getTopic: function(post_id){
 				this.currentView = "vpost"
 				this.postId = post_id
+			},
+			getTopicList: function(tab){
+				var self = this;
+				api.topic.getTopicList({
+					tab: tab,
+					page: 1,
+					limit: 40
+				}, function(data){
+					self.posts = data.data
+				})
 			}
+
 		}
 	}
 </script>

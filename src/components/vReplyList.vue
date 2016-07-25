@@ -45,15 +45,9 @@ export default {
 	props: {
 		replies: {
 			type: Array,
-			required: true,
-			default: []
+			required: true
+			// default: []
 		}
-	},
-	created: function(){
-		this.replies.forEach(function(reply, index){
-			reply.isShowReply = false;
-		})
-		console.log(this.replies)
 	},
 	methods: {
 		toggleReply: function(index){
@@ -64,9 +58,12 @@ export default {
 			// this.replies.splice(index, 1, temReplyObj);
       
       var reply = this.replies[index] 
-      console.log(reply)
+      this.replies.forEach(function(r, i){
+        if (i !== index){
+          r.isShowReply = false
+        }
+      })
       reply.isShowReply = !reply.isShowReply
-      console.log(reply)
 		}
 	}
 }
