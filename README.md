@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # blog
 
 > A Vue.js project
@@ -25,3 +26,6 @@ npm test
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+=======
+#vue_blog
+>>>>>>> ec67391feca46ae59a0abb48d819ecbacf0fb3d8
