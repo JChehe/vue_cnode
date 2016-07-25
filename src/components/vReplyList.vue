@@ -1,0 +1,142 @@
+<template>
+	<div class="reply-list">
+  	<div class="header">
+    	<h4>评论 已有<span>{{replies.length}}</span>回复</h4>
+  	</div>
+  	<ul>
+  		<li v-for="reply in replies">
+  			<div class="user">
+  				<div class="left">
+            <img :src="reply.author.avatar_url" alt="">
+            <div>
+              <p class="author">{{reply.author.loginname}}</p>
+              <p class="post_time">发帖时间：{{reply.create_at}}</p>
+            </div>
+          </div>
+          <div class="right">
+          	<div class="like-btn">
+          		<i class="iconfont">&#xe60a;</i>{{reply.ups.length}}
+          	</div>
+          	<div class="reply-btn" @click="toggleReply($index)">
+          		<i class="iconfont">&#xe60b;</i>
+          	</div>
+          </div>
+  			</div>
+  			<div class="reply-content">
+  				{{{reply.content}}}
+  			</div>
+  			<div class="reply-form" v-if="reply.isShowReply">
+  				<textarea name="">@{{reply.author.loginname}} </textarea>
+  				<button type="button">确定</button>
+  			</div>
+  		</li>
+		</ul>
+	</div>
+</template>
+
+<script>	
+import lodash from "lodash"
+
+export default {
+	data: function(){
+		return{
+		}
+	},
+	props: {
+		replies: {
+			type: Array,
+			required: true,
+			default: []
+		}
+	},
+	created: function(){
+		this.replies.forEach(function(reply, index){
+			reply.isShowReply = false;
+		})
+		console.log(this.replies)
+	},
+	methods: {
+		toggleReply: function(index){
+			// console.log(index)
+			// this.replies[index].isShowReply = !this.replies[index].isShowReply
+			// var temReplyObj = lodash.cloneDeep(this.replies[index]);
+			// temReplyObj.isShowReply = !temReplyObj.isShowReply;
+			// this.replies.splice(index, 1, temReplyObj);
+      
+      var reply = this.replies[index] 
+      console.log(reply)
+      reply.isShowReply = !reply.isShowReply
+      console.log(reply)
+		}
+	}
+}
+</script>
+
+<style scoped>
+	.left{
+		float: left;
+		overflow: hidden;
+	}
+	.left img+div{
+		float: right;
+	}
+	.right{
+		float: right;
+	}
+	.reply-list{
+			margin-top: 15px;
+  	}
+  	.reply-list .header{
+  		background-color: #f6f6f6;
+  		padding: 10px;
+  		border-radius: 3px 3px 0 0;
+  	}
+  	.like-btn, .reply-btn{
+			float: left;
+  	}
+  	.like-btn{
+  		margin-right: 6px;
+  	}
+
+  	.reply-list ul{
+  		padding: 10px;
+  	}
+
+  	.reply-list ul li{
+  		padding: 6px;
+  		border-bottom: 1px solid #f0f0f0;
+  		overflow: hidden;
+  	}
+  	.reply-form{
+  		clear: both;
+  	}
+  	.reply-form textarea{
+  		width: 100%;
+  		resize: none;
+  		margin-top: 12px;
+  		border: 1px solid #d5dbdb;
+  		border-radius: 3px;
+  		height: 88px;
+  	}
+  	.reply-form textarea+button{
+  		background-color: #4fc08d;
+  		color: #fff;
+  		border: 0;
+  		width: 100%;
+  		line-height: 28px;
+  	}
+  	.left p{
+  		font-size: 14px;
+  		line-height: 1.6;
+  	}
+  	.reply-list .left img{
+  		width: 32px;
+  		height: 32px;
+  		margin-top: 6px;
+  	}
+
+  	.user{
+  		overflow: hidden;
+  		margin: 10px 0;
+  	}
+</style>
