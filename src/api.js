@@ -28,7 +28,7 @@ export default{
 				method: "get",
 				data:{
 					mdrender: opts.mdrender,
-					accessstoken: opts.accessstoken
+					accesstoken: opts.accesstoken
 				},
 				success: function(data){
 					callback(data)
@@ -43,7 +43,7 @@ export default{
 				url: apiUrl + "post",
 				method: "get",
 				data: {
-					accessstoken: opts.accessstoken,
+					accesstoken: opts.accesstoken,
 					title: opts.title,
 					tab: opts.tab, // only ask\share\job
 					content: opts.content
@@ -63,7 +63,7 @@ export default{
 				url: apiUrl + "topic_collect/collect",
 				method: "get",
 				data: {
-					accessstoken: opts.accessstoken,
+					accesstoken: opts.accesstoken,
 					topic_id: opts.topic_id
 				},
 				callback: function(data){
@@ -79,7 +79,7 @@ export default{
 				url: apiUrl + "topic_collect/de_collect",
 				method: "post",
 				data:{
-					accessstoken: opts.accessstoken,
+					accesstoken: opts.accesstoken,
 					topic_id: opts.topic_id
 				},
 				success: function(data){
@@ -109,7 +109,7 @@ export default{
 				url: apiUrl + "topic/" + opts.topic_id + "/replies",
 				method: "post",
 				data: {
-					accessstoken: opts.accessstoken,
+					accesstoken: opts.accesstoken,
 					content: opts.content,
 					reply_id: opts.reply_id
 				},
@@ -126,7 +126,7 @@ export default{
 				url: apiUrl + "reply/" + opts.reply_id + "/ups",
 				method: "post",
 				data:{
-					accessstoken: opts.accessstoken
+					accesstoken: opts.accesstoken
 				},
 				success: function(data){
 					callback(data)
@@ -152,10 +152,10 @@ export default{
 		},
 		validateAccessToken: function(opts, callback){
 			reqwest({
-				url: apiUrl + "/accessstoken",
+				url: apiUrl + "/accesstoken",
 				method: "post",
 				data:{
-					accessstoken: opts.accessstoken
+					accesstoken: opts.accesstoken
 				},
 				success: function(data){
 					callback(data)
@@ -170,10 +170,10 @@ export default{
 	message: {
 		getMessage: function(opts, callback){
 			reqwest({
-				url: apiUrl + "/message",
+				url: apiUrl + "/messages",
 				method: "get",
 				data: {
-					accessstoken: opts.accessstoken,
+					accesstoken: opts.accesstoken,
 					mdrender: opts.mdrender
 				},
 				success: function(data){
@@ -189,7 +189,7 @@ export default{
 				url: apiUrl + "/message/" + opts.mark_all,
 				method: "post",
 				data: {
-					accessstoken: opts.accessstoken
+					accesstoken: opts.accesstoken
 				},
 				success: function(data){
 					callback(data)

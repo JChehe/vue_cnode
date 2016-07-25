@@ -32,49 +32,62 @@
 				</ul>
 			</div>
 			<div class="tabpanel" :class="{'active': activeItem === 1}">
-				22222
+				<ul>
+					<li v-for="message in allMessages.has_read_messages">
+						<div class="header">
+							<div class="left">
+								<img :src="message.author.avatar_url">
+								<div>
+									<p>{{message.author.loginname}}</p>
+									<p>在回复中@了你</p>
+								</div>
+							</div>
+							<div class="right">
+								<p>{{message.reply.create_at}}</p>
+							</div>
+						</div>
+						<div class="content">
+							<div class="">
+								{{{message.reply.content}}}
+							</div>
+							<div class="related-topic">
+								<h4>{{message.topic.title}}</h4>
+							</div>
+						</div>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>
-
-
 </template>
 
 <script>
+
+import api from "../api"
+
 	export default{
+		
+
 		data: function(){
 			return {
 				activeItem: 0,
-				allMessages: {
-			    has_read_messages: [],
-			    hasnot_read_messages: [
-			      {
-			        id: "543fb7abae523bbc80412b26",
-			        type: "at",
-			        has_read: false,
-			        author: {
-			          loginname: "alsotang",
-			          avatar_url: "https://avatars.githubusercontent.com/u/1147375?v=2"
-			        },
-			        topic: {
-			          id: "542d6ecb9ecb3db94b2b3d0f",
-			          title: "adfadfadfasdf",
-			          last_reply_at: "2014-10-18T07:47:22.563Z"
-			        },
-			        reply: {
-			          id: "543fb7abae523bbc80412b24",
-			          content: "<a href='https://cnodejs.org/user/alsotang'>@alsotang</a> 哈哈",
-			          ups: [ ],
-			          create_at: "2014-10-16T12:18:51.566Z"
-			          }
-			        }
-			    ]
-				}
+				allMessages: {}
 			}
+		},
+		created: function(){
+			this.getMessages()
 		},
 		methods: {
 			changeItem: function(itemIndex){
 				this.activeItem = itemIndex
+			},
+			getMessages: function(){
+				var self = this
+				api.message.getMessage({
+					accesstoken: "5f9f0171-db81-4578-8af4-9033031b69c2"
+				}, function(data){
+					self.allMessages = data.data
+				})
 			}
 		}
 	}
