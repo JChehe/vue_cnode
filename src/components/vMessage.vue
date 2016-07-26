@@ -7,7 +7,7 @@
 		<div class="tab-content">
 			<div class="tabpanel" :class="{'active': activeItem === 0}">
 				<ul>
-					<li v-for="message in allMessages.hasnot_read_messages">
+					<li v-for="message in allMessages.has_read_messages">
 						<div class="header">
 							<div class="left">
 								<img :src="message.author.avatar_url">
@@ -33,7 +33,7 @@
 			</div>
 			<div class="tabpanel" :class="{'active': activeItem === 1}">
 				<ul>
-					<li v-for="message in allMessages.has_read_messages">
+					<li v-for="message in allMessages.hasnot_read_messages">
 						<div class="header">
 							<div class="left">
 								<img :src="message.author.avatar_url">

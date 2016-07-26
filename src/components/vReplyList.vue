@@ -14,7 +14,7 @@
             </div>
           </div>
           <div class="right">
-          	<div class="like-btn">
+          	<div class="like-btn" @click="toggleUps($index)">
           		<i class="iconfont">&#xe60a;</i>{{reply.ups.length}}
           	</div>
           	<div class="reply-btn" @click="toggleReply($index)">
@@ -26,8 +26,10 @@
   				{{{reply.content}}}
   			</div>
   			<div class="reply-form" v-if="reply.isShowReply">
-  				<textarea name="">@{{reply.author.loginname}} </textarea>
-  				<button type="button">确定</button>
+  				<form @submit.prevent="replyToComment($index)">
+            <textarea v-model="replyContent">@{{reply.author.loginname}} </textarea>
+            <button type="submit">确定</button>    
+          </form>
   			</div>
   		</li>
 		</ul>
@@ -35,11 +37,12 @@
 </template>
 
 <script>	
-// import lodash from "lodash"
+import api from "../api"
 
 export default {
 	data: function(){
 		return{
+      replyContent: ""
 		}
 	},
 	props: {
@@ -47,15 +50,14 @@ export default {
 			type: Array,
 			required: true
 			// default: []
-		}
+		},
+    postId: {
+      type: String,
+      required: true
+    }
 	},
 	methods: {
 		toggleReply: function(index){
-			// console.log(index)
-			// this.replies[index].isShowReply = !this.replies[index].isShowReply
-			// var temReplyObj = lodash.cloneDeep(this.replies[index]);
-			// temReplyObj.isShowReply = !temReplyObj.isShowReply;
-			// this.replies.splice(index, 1, temReplyObj);
       
       var reply = this.replies[index] 
       this.replies.forEach(function(r, i){
@@ -64,7 +66,43 @@ export default {
         }
       })
       reply.isShowReply = !reply.isShowReply
-		}
+		},
+    replyToComment: function(index){
+      var self = this
+
+      var replyId = self.replies[index].id
+
+      api.reply.newReply({
+        accesstoken: "5f9f0171-db81-4578-8af4-9033031b69c2",
+        topic_id: self.postId,
+        content: self.replyContent,
+        reply_id: replyId
+      }, function(data){
+        if(data.success){
+          // self.getTopic() // 更新数据
+          self.$parent.getTopic()
+        }
+      })
+      // console.log(reply)
+    },
+    toggleUps: function(index){
+      var reply = this.replies[index]
+      console.log(reply)
+      api.reply.ups({
+        reply_id: reply.id,
+        accesstoken: "5f9f0171-db81-4578-8af4-9033031b69c2"
+      }, function(data){
+        if(data.success){
+          console.log(data)
+          if(data.action === "down"){
+            var index = reply.ups.indexOf("5608e997272b724e5efefd08");
+            reply.ups.splice(index, 1)
+          }else{
+            reply.ups.push("5608e997272b724e5efefd08");
+          }
+        }
+      })
+    }
 	}
 }
 </script>

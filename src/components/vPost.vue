@@ -17,7 +17,13 @@
     <div class="post-content">
       {{{post.content}}}
     </div>
-    <vreplylist :replies="post.replies"></vreplylist>
+    <vreplylist :replies="post.replies" :post-id="post.id"></vreplylist>
+    <div>
+      <form @submit.prevent="replyHandler">
+        <textarea v-model="replyContent"></textarea>
+        <button type="submit">回复</button>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -31,7 +37,8 @@
     },
 		data: function(){
       return {
-        post: {}
+        post: {},
+        replyContent: ""
       }
 		},
 		props:{
@@ -41,20 +48,11 @@
       }
 		},
 		created: function(){
-        var self = this;
-        api.topic.getTopic({
-          _id: self.postId
-        }, function(data){
-          console.log(data)
-          data.data.replies.forEach(function(reply, index){
-            reply.isShowReply = false
-          })
-          self.post = data.data
-        })
+        this.getTopic()
 		},
     watch: {
       postId: function(){
-     
+        
       }
     },
     methods:{
@@ -69,6 +67,31 @@
         }
         return name;
       },
+      getTopic: function(){
+        var self = this;
+        api.topic.getTopic({
+          _id: self.postId
+        }, function(data){
+          data.data.replies.forEach(function(reply, index){
+            reply.isShowReply = false
+          })
+          self.post = data.data
+          console.log(self.post.replies)
+        })
+      },
+      replyHandler: function(){
+        var self = this
+
+        api.reply.newReply({
+          accesstoken: "5f9f0171-db81-4578-8af4-9033031b69c2",
+          topic_id: self.postId,
+          content: self.replyContent
+        }, function(data){
+          if(data.success){
+            self.getTopic() // 更新数据
+          }
+        })
+      }
     }
 	}
 </script>

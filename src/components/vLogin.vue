@@ -24,6 +24,7 @@
 						accesstoken: self.accessToken
 					}, function(data){
 						if(data.success){
+							console.log(data)
 							alert("验证成功")
 						}
 					})
