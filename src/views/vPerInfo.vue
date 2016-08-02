@@ -4,13 +4,8 @@
 			<img :src="userInfo.avatar_url">
 			<p>{{userInfo.loginname}}</p>
 			<div class="right">
-				<p>注册时间：{{userInfo.create_at}}</p>
+				<p>注册时间：{{userInfo.create_at | getLastTimeStr true}}</p>
 				<p>积分：{{userInfo.score}}</p>
-			</div>
-		</div>
-		<div>
-			<div class="">
-				
 			</div>
 		</div>
 	</div>
@@ -25,15 +20,19 @@
 				<ul>
 					<li v-for="topic in userInfo.recent_topics">
 						<div class="header">
-							<div class="left">
+							<vuserpanel :avatar="topic.author.avatar_url">
+								<p slot="one">{{topic.title}}</p>
+								<p slot="two">{{topic.author.loginname}}</p>
+							</vuserpanel>
+							<!-- <div class="left">
 								<img :src="topic.author.avatar_url">
 								<div>
 									<p>{{topic.title}}</p>
 									<p>{{topic.author.loginname}}</p>
 								</div>
-							</div>
+							</div> -->
 							<div class="right">
-								<p>{{topic.last_reply_at}}</p>
+								<p>{{topic.last_reply_at | getLastTimeStr true}}</p>
 							</div>
 						</div>
 					</li>
@@ -63,19 +62,32 @@
 
 <script>
     import api from "../api"
+  	import vUserPanel from "../components/vUserPanel"
 
     
 	export default {
+		components: {
+			vuserpanel: vUserPanel
+		},
     data: function(){
       return {
         activeItem: 0,
         userInfo: {}
       }
     },
-    init: function(){
-        var self = this
+    props: {
+    	isShowSidebar: {
+    		type: Boolean,
+    		required: true,
+    		twoway: true
+    	}
+    },
+   
+    created: function(){
+    	this.isShowSidebar = false
+    	var self = this
         api.user.getUserInfo({
-            loginname: "JChehe",
+          loginname: "JChehe",
         }, function(data){
           self.userInfo = data.data
         })
@@ -92,11 +104,20 @@
 	.user-info{
 		text-align: center;
 		overflow: hidden;
+		padding-top: 10px;
 	}
-	.right{
-		float: right;
+	.user-info .right{
+		padding-right: 15px;
 	}
-
+	.user-info .right>p{
+		text-align: right;
+	}
+	.user-info img{
+		width: 96px;
+		height: 96px;
+		border-radius: 50%;
+		box-shadow: 0 0 8px rgba(0,0,0,.5)
+	}
 	*,*:before,*:after{
 		box-sizing: border-box;
 	}
@@ -156,9 +177,7 @@
   	 	float: left;
   	 	overflow: hidden;
   	 }
-  	 .right{
-  	 	float: right;
-  	 }
+
   	 .left img{
   	 	width: 44px;
   	 	height: 44px;
@@ -178,10 +197,17 @@
   	 .right strong{
   	 	color: #42b983
   	 }
+  	 .right p{
+  	 	margin-bottom: 0;
+  	 }
   	 .related-topic{
   	 	background-color: #f0f0f0;
   	 	padding: 5px;
   	 	margin:10px 5px;
   	 	border-radius: 5px;
   	 }
+</style>
+
+<style>
+	
 </style>

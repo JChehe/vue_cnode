@@ -22,7 +22,15 @@
 
 <script>
 	export default {
-
+		props: {
+			isShowSidebar: {
+				type: Boolean,
+				twoway: true
+			}
+		},
+		created: function(){
+			this.isShowSidebar = false
+		}
 	}
 </script>
 

@@ -1,18 +1,15 @@
 <template>
 	<div class="reply-list">
   	<div class="header">
-    	<h4>评论 已有<span>{{replies.length}}</span>回复</h4>
+    	<h4>评论 已有<span> {{replies.length}} </span>回复</h4>
   	</div>
-  	<ul>
+  	<ul v-if="replies.length > 0">
   		<li v-for="reply in replies">
   			<div class="user">
-  				<div class="left">
-            <img :src="reply.author.avatar_url" alt="">
-            <div>
-              <p class="author">{{reply.author.loginname}}</p>
-              <p class="post_time">发帖时间：{{reply.create_at}}</p>
-            </div>
-          </div>
+  				<vuserpanel :avatar="reply.author.avatar_url">
+            <p slot="one">{{reply.author.loginname}}</p>
+            <p slot="two">回复时间：{{reply.create_at | getLastTimeStr true}}</p>
+          </vuserpanel>
           <div class="right">
           	<div class="like-btn" @click="toggleUps($index)">
           		<i class="iconfont">&#xe60a;</i>{{reply.ups.length}}
@@ -38,8 +35,12 @@
 
 <script>	
 import api from "../api"
+import vuserpanel from "../components/vUserPanel"
 
 export default {
+  components: {
+    vuserpanel
+  },
 	data: function(){
 		return{
       replyContent: ""
@@ -50,11 +51,7 @@ export default {
 			type: Array,
 			required: true
 			// default: []
-		},
-    postId: {
-      type: String,
-      required: true
-    }
+		}
 	},
 	methods: {
 		toggleReply: function(index){
@@ -73,7 +70,7 @@ export default {
       var replyId = self.replies[index].id
 
       api.reply.newReply({
-        accesstoken: "5f9f0171-db81-4578-8af4-9033031b69c2",
+        accesstoken: localStorage.accesstoken,
         topic_id: self.postId,
         content: self.replyContent,
         reply_id: replyId
@@ -126,13 +123,18 @@ export default {
   		padding: 10px;
   		border-radius: 3px 3px 0 0;
   	}
+    .reply-list .header h4{
+      margin-bottom: 0;
+    }
   	.like-btn, .reply-btn{
 			float: left;
   	}
   	.like-btn{
   		margin-right: 6px;
   	}
-
+    .reply-btn{
+      margin-top: 2px
+    }
   	.reply-list ul{
   		padding: 10px;
   	}
@@ -174,4 +176,5 @@ export default {
   		overflow: hidden;
   		margin: 10px 0;
   	}
+
 </style>

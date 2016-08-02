@@ -1,17 +1,29 @@
 <template>
 	<div class="offcanvas" @click="hide">
+
     <nav class="offcanvas-bar" @click.stop>
-      <div class="logo">
-        <img src="//o4j806krb.qnssl.com/public/images/cnodejs_light.svg" alt="">
+      <div class="user">
+        <div v-if="isLogin" @click="goUser">
+          <img :src="avatar_url" alt="">
+          <p>Jchehe</p>
+        </div>
+        <a v-else @click="goEnter" class="login"><i class="iconfont">&#xe604;</i>登录</a>
+
+
       </div>
-      <ul v-for="items in itemSet">
-      	<li v-for="item in items" @click="changeView(item.view),changeTab(item.tab)">
+      <ul v-for="(index, items) in itemSet">
+      	<li v-for="item in items" v-link="{path: '/'+item.view, query:{'tab': item.tab}}" :class="{'active': item.tab == tab, 'tab': item.tab}" @click="change(item.tab, item.name)">
       		<a href="javascript:;">
       			<i class="iconfont">{{{item.icon}}}</i>
 	      		{{item.name}}
       		</a>
       	</li>
+        <li v-if="isLogin && index==itemSet.length -1"><a @click="logout"><i class="iconfont">&#xe60d;</i> 注销</a></li>
+        
       </ul>
+      <div class="logo">
+        <img src="//o4j806krb.qnssl.com/public/images/cnodejs_light.svg" alt="">
+      </div>
     </nav>
   </div>
 </template>
@@ -20,80 +32,115 @@
 export default{
 	data:function(){
 		return {
+      tab: this.$route.query.tab || "all",
 			itemSet:[
 				[{
 					icon: "&#xe602;",
 					name: "全部",
-          view: "vlist",
+          view: "list",
           tab: "all"
 				},{
 					icon: "&#xe605;",
 					name: "精华",
-          view: "vlist",
+          view: "list",
           tab: "good"
 				},{
 					icon: "&#xe600;",
 					name:"分享",
-          view: "vlist",
+          view: "list",
           tab: "share"
 				},{
 					icon: "&#xe608;",
 					name: "问答",
-          view: "vlist",
+          view: "list",
           tab: "ask"
 				},{
 					icon: "&#xe606;",
 					name: "招聘",
-          view: "vlist",
+          view: "list",
           tab: "job"
 				}],[{
 					icon: "&#xe607;",
 					name: "消息",
-          view: "vmessage"
+          view: "message"
 				},{
 					icon: "&#xe608;",
 					name: "关于",
-          view: "vabout"
-				}],[{
+          view: "about"
+				}]/*,[{
           icon: "&#xe608;",
           name: "个人信息",
-          view: "vperinfo"
-        },{
-          icon: "&#xe608;",
-          name: "登录",
-          view: "vlogin"
+          view: "perinfo"
         },{
           icon: "&#xe608;",
           name: "发帖",
-          view: "vnewpost"
-        }]
+          view: "newtopic"
+        }]*/
 			]
 		}
 	},
+ 
 	props:{
 		isShowSidebar:{
-			type:Boolean,
-			required: true
+			type: Boolean,
+			required: true,
+      twoWay: true
 		},
-    currentView: {
+    isShowConfirm:{
+      type: Boolean,
+      required: true,
+      twoWay: true
+    },
+    isLogin: {
+      type: Boolean,
+      required: true,
+      twoWay: true
+    },
+    avatar_url: {
       type: String,
       required: true,
-      twoway: true
+      twoWay: true
     },
-    tab: {
+    loginname: {
       type: String,
-      twoway: true
+      required: true,
+      twoWay: true
+    },
+    title: {
+      type: String,
+      required: true,
+      twoWay: true
     }
 	},
+ 
 	methods:{
 		hide: function(){
 			this.isShowSidebar = false
 		},
-    changeView: function(view){
-      this.currentView = view
+    change: function(tab, name){
+      console.log(event.currentTarget.innerText)
+      if(tab == undefined && event.currentTarget.dataset.view=="logout"){
+         this.isShowConfirm = true        
+      }
+      this.title = name
+      this.tab = tab
     },
-    changeTab: function(tab){
-      this.tab = tab;
+    goEnter: function(){
+      var link = ""
+      var redirect = this.$route.query.redirect
+      if(this.$route.path!=="login" && !redirect){
+        link = "/login?redirect=" + encodeURIComponent(this.$route.path)
+          this.$route.router.go(link)
+      }else{
+        this.isShowSidebar = false
+      }
+    },
+    goUser: function(){
+      var self = this
+      this.$route.router.go({path: "/perinfo/"+this.loginname})
+    },
+    logout: function(event){
+      this.isShowConfirm = true
     }
 	}
 }
@@ -109,11 +156,32 @@ export default{
     visibility: hidden;
     z-index: 1001;
   }
+  .user{
+    text-align: center;
+    padding: 25px 0;
+  }
+  .user img{
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    box-shadow: 0 0 1px 5px #3d4a5d;
+
+  }
   
+  .user img+p{
+    color: #fff;
+    line-height: 32px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80%;
+    margin: 5px auto;
+  }
   .offcanvas .logo {
     text-align: center;
     padding: 14px 24px;
-    box-shadow: 0 1px 0 rgba(0, 0, 0, .5), 0 2px 0 rgba(0, 0, 0, .2);
+    position: absolute;
+    bottom: 0;
   }
   
   .offcanvas .logo img {
@@ -126,7 +194,7 @@ export default{
     bottom: 0;
     left: 0;
     width: 270px;
-    background-color: #ccc;
+    background-color: #24344B;
     max-width: 100%;
     -webkit-transform: translateX(-100%);
     -ms-transform: translateX(-100%);
@@ -138,13 +206,13 @@ export default{
   }
   
   .offcanvas-bar ul {
-    padding: 0px 24px;
     margin-top: 14px;
+    background-color: #2b3c58;
   }
   
   .offcanvas-bar ul li {
     line-height: 1.8;
-    padding: 4px;
+    padding: 4px 24px;
   }
   .offcanvas-bar ul li a{
   	display: block;
@@ -158,11 +226,14 @@ export default{
     text-decoration: none;
   }
   
-  .offcanvas-bar ul:nth-of-type(2) li:first-child {
-    box-shadow: 0 -1px 0 #aaa, 0 -2px 0 #333;
+
+  
+  .v-link-active.tab.active, .v-link-active:not(.tab){
+    background-color: #3B4F6A;
   }
-
-
+  .user .login{
+    font-size: 16px;
+  }
 
 
 </style>

@@ -1,34 +1,29 @@
 <template>
   <div id="app" :class="{ 'offcanvas-page': isShowSidebar, 'show-offcanvas': isShowSidebar}" >
-    <vSidebar :is-show-sidebar.sync="isShowSidebar" :current-view.sync="currentView" :tab.sync="tab"></vSidebar>  
+    <vSidebar :is-show-sidebar.sync="isShowSidebar" :is-show-confirm.sync="isShowConfirm" :is-login.sync="isLogin" :title.sync="title" :avatar_url.sync="avatar_url" :loginname.sync="loginname"></vSidebar>  
     <main>
-      <vheader :title="title" :is-show-sidebar.sync="isShowSidebar"></vheader>
-      
+      <vheader :title="title" :is-show-sidebar.sync="isShowSidebar" :show.sync="showConfirm"></vheader>
       <div id="content">
-        <component  :post-id.sync="postId" :is="currentView" :current-view.sync="currentView" :tab.sync="tab">
-          <vlist></vlist>
-          <vpost></vpost>
-          <vabout></vabout>
-          <vmessage></vmessage>  
-          <vlogin></vlogin>
-          <vperinfo></vperinfo>
-          <vnewpost></vnewpost>
-        </component>
+        <router-view :is-show-sidebar.sync="isShowSidebar" :is-login.sync="isLogin" :avatar_url.sync="avatar_url" :loginname.sync="loginname"></router-view>
       </div>
     </main>
+    <vconfirm :is-show-confirm.sync="isShowConfirm" :is-show-sidebar.sync="isShowSidebar" :is-login.sync="isLogin">
+      <h3 slot="body">确认注销当前账号吗？</h3>
+    </vconfirm>
   </div>
 </template>
 
 <script>
 import vheader from './components/vHeader'
 import vsidebar from './components/vSidebar'
-import vlist from './components/vList'
-import vpost from './components/vPost'
-import vabout from './components/vAbout'
-import vmessage from './components/vMessage'
-import vperinfo from './components/vPerInfo'
-import vnewpost from './components/vNewPost'
-import vlogin from './components/vLogin'
+import vlist from './views/vList'
+import vpost from './views/vTopic'
+import vabout from './views/vAbout'
+import vmessage from './views/vMessage'
+import vperinfo from './views/vPerInfo'
+import vnewpost from './views/vNewTopic'
+import vlogin from './views/vLogin'
+import vconfirm from './components/vConfirm'
 
 export default {
   components: {
@@ -40,16 +35,43 @@ export default {
     vmessage: vmessage,
     vperinfo: vperinfo,
     vnewpost: vnewpost,
-    vlogin: vlogin
+    vlogin: vlogin,
+    vconfirm: vconfirm
   },
   data: function(){
     return {
-      title: "hahaha",
+      title: "",
       isShowSidebar: false,
       currentView: "vlist",
       postId: "",
-      tab: "all"
+      tab: "all",
+      isShowConfirm: false,
+      isLogin: localStorage.loginname ? true : false,
+      loginname: localStorage.loginname,
+      avatar_url: localStorage.avatar_url
     }
+  },
+  created: function(){
+    // alert(this.$route.params)
+    console.log(this.$route)
+    var router = this.$route
+    var temTitle = "";
+    var routerName = router.name.trim()
+    if(routerName === "list"){
+      switch (router.query.tab){
+        case "all": temTitle = "全部"; break;
+        case "good": temTitle = "精华"; break;
+        case "share": temTitle = "分享"; break;
+        case "ask": temTitle = "问答"; break;
+        case "job": temTitle = "招聘"; break;
+      }
+    }else{
+      if(routerName === "message") temTitle = "消息"
+      else if(routerName === "about") temTitle = "关于"
+      else if(routerName === "perinfo") temTitle = "个人信息"
+      else if(routerName === "newtopic") temTitle = "发帖"
+    }
+    this.title = temTitle
   },
   watch:{
     isShowSidebar: function(){
@@ -60,6 +82,14 @@ export default {
           document.body.style.position = "static"
         }, 300)
       }
+    },
+    isShowConfirm: function(){
+      console.log("ajsds")
+    }
+  },
+  methods: {
+    showConfirm: function(){
+      this.isShowConfirm = !this.isShowConfirm
     }
   }
 }
@@ -71,14 +101,14 @@ export default {
     width: 100%;
   }
   #content{
-    padding-top: 44px;
+    padding: 54px 10px 10px;
   }
   #app.show-offcanvas .offcanvas{
     visibility: visible;
   }
   
   #app.show-offcanvas .offcanvas {
-    background-color: rgba(0, 0, 0, .5);
+    background-color: rgba(0, 0, 0, .3);
   }
   
   #app.show-offcanvas main {

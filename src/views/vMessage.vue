@@ -66,16 +66,22 @@
 import api from "../api"
 
 	export default{
-		
-
 		data: function(){
 			return {
 				activeItem: 0,
 				allMessages: {}
 			}
 		},
+		props: {
+			isShowSidebar: {
+				type: Boolean,
+				required: true,
+				twoway: true
+			}
+		},
 		created: function(){
 			this.getMessages()
+			this.isShowSidebar = false
 		},
 		methods: {
 			changeItem: function(itemIndex){
@@ -84,7 +90,7 @@ import api from "../api"
 			getMessages: function(){
 				var self = this
 				api.message.getMessage({
-					accesstoken: "5f9f0171-db81-4578-8af4-9033031b69c2"
+					accesstoken: localStorage.accesstoken
 				}, function(data){
 					self.allMessages = data.data
 				})

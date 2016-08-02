@@ -2,6 +2,7 @@
 	<form @submit.prevent="newPost">
 		<div class="form-group">
 			<label>
+				选择板块：
 				<select v-model="tabSelected">
 					<option v-for="tabOpt in tabOptions" :value="tabOpt.value">{{tabOpt.text}}</option>
 				</select>
@@ -34,6 +35,16 @@
 				postContent: ""
 			}
 		},
+		props: {
+			isShowSidebar: {
+				type: Boolean,
+				required: true,
+				twoway: true
+			}
+		},
+		created: function(){
+			this.isShowSidebar = false
+		},
 		methods: {
 			newPost: function(){
 				var self = this
@@ -53,7 +64,8 @@
 						tab: self.tabSelected
 					}, function(data){
 						console.log(data)
-						alert("发帖成功")
+						// alert("发帖成功")
+						self.$route.router.go({name:"list"})
 					})
 				}
 			}
@@ -62,20 +74,6 @@
 </script>
 
 <style scoped>
-	textarea{
-		width: 100%;
-		min-height: 260px;
-	}
-	.form-group{
-		width: 100%;
-	}
-	button{
-		background-color: #80bd01;
-		border: 0;
-		color: #fff;
-		max-width: 120px;
-		width: 60%;
-		height: 26px;
-		border-radius: 5px;
-	}
+	
+
 </style>

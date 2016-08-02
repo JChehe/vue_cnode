@@ -1,28 +1,117 @@
 @font-face {
   font-family: 'iconfont';
-  src: url('//at.alicdn.com/t/font_1469363432_6108031.eot');
-  /* IE9*/
-  src: url('//at.alicdn.com/t/font_1469363432_6108031.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('//at.alicdn.com/t/font_1469363432_6108031.woff') format('woff'), /* chrome、firefox */
-  url('//at.alicdn.com/t/font_1469363432_6108031.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-  url('//at.alicdn.com/t/font_1469363432_6108031.svg#iconfont') format('svg');
-  /* iOS 4.1- */
+  src: url('//at.alicdn.com/t/font_1470153885_631436.eot'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_1470153885_631436.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('//at.alicdn.com/t/font_1470153885_631436.woff') format('woff'), /* chrome、firefox */
+  url('//at.alicdn.com/t/font_1470153885_631436.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/font_1470153885_631436.svg#iconfont') format('svg'); /* iOS 4.1- */
 }
-
+                    
+                    
+html{
+  -webkit-font-smoothing: antialiased;
+  font: 400 14px/20px "Helvetica Neue",Helvetica,Arial,sans-serif
+}
 .iconfont {
   font-family: "iconfont";
   font-size: 16px;
   font-style: normal;
 }
-
+body, h1, h2, h3, h4, h5, h6, .uk-navbar-nav > li > a{
+  font-family: "Proxima Nova", "Helvetica Neue", Helvetica,"PingFang SC","Microsoft YaHei","微软雅黑", Arial, sans-serif
+}
 body,
 main,
 header {
   width: 100%;
 }
-
+ol,ul{
+  list-style-position: inside;
+}
+.left{
+  float: left;
+}
+.right{
+  float: right;
+}
 main {
   -webkit-transition: .3s all;
   -o-transition: .3s all;
   transition: .3s all;
+}
+
+*+address, *+blockquote, *+dl, *+fieldset, *+figure, *+ol, *+p, *+pre, *+ul{
+  margin-top: 15px
+}
+
+
+address, blockquote, dl, fieldset, figure, ol, p, pre, ul{
+  margin: 0 0 15px 0;
+}
+
+textarea {
+    width: 100%;
+    min-height: 260px;
+}
+
+input[type="text"],
+select {
+    height: 30px;
+    padding: 4px 6px;
+    border-radius: 4px;
+    border: 1px solid #e5e5e5;
+    color: #666;
+    vertical-align: middle;
+}
+
+.form-group {
+    margin-bottom: 12px;
+}
+
+textarea {
+    border: 1px solid #e5e5e5;
+    padding: 4px 6px;
+    border-radius: 4px;
+    color: #666;
+}
+
+.form-group {
+    width: 100%;
+}
+
+button {
+    background-color: #80bd01;
+    border: 0;
+    color: #fff;
+    max-width: 160px;
+    width: 100%;
+    padding: 0 16px;
+    line-height: 32px;
+    border-radius: 5px;
+}
+
+h1,h2,h3,h4,h5,h6{
+  margin: 0 0 15px 0;
+  font-weight: 300;
+  color: #222;
+  text-transform: none;
+}
+h1{
+  font-size: 36px;
+  line-height: 42px
+}
+
+h2{
+  font-size: 24px;
+  line-height: 30px;
+}
+
+h3{
+  font-size: 18px;
+  line-height: 24px;
+}
+
+h4,h5,h6{
+  font-size: 16px;
+  line-height: 22px;
 }

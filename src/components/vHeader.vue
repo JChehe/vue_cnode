@@ -3,7 +3,7 @@
       <div class="navbar-toggle" id="show-offcanvas" @click="toggleSidebar">
         <i class="iconfont">&#xe601;</i>
       </div>
-      <div class="send-btn">
+      <div class="send-btn" title="发帖" v-link="{path: '/newtopic'}">
         <i class="iconfont">&#xe609;</i>
       </div>
       <h2>{{title}}</h2>
@@ -51,6 +51,10 @@
   
   header h2 {
     text-align: center;
+    font-size: 16px;
+    margin-bottom: 0;
+    line-height: 44px;
+    font-weight: 400
   }
   
   .navbar-toggle {
@@ -67,6 +71,12 @@
     float: right;
     color: #42b983;
     cursor: pointer;
+    vertical-align: bottom;
+  }
+  .send-btn i{
+    font-size: 22px;
+    padding-top: 11px;
+    padding-bottom: 11px;
   }
   </style>
   
