@@ -1,7 +1,7 @@
 <template>
 	<form @submit.prevent="signIn">
 		<div class="form-group">
-			<input type="text" v-model="accessToken" placeholder="请输入access_token">
+			<input type="text" v-model="accessTokenInput" placeholder="请输入access_token">
 		</div>
 		<button type="submit">登录</button>
 	</form>
@@ -11,9 +11,9 @@
 	import api from "../api"
 
 	export default {
-		data: function(){
+		data(){
 			return {
-				accessToken: ""
+				accessTokenInput: ""
 			}
 		},
 		props: {
@@ -28,38 +28,42 @@
 				twoWay: true
 			},
 			loginname: {
-				type: Boolean,
+				type: String,
 				required: true,
 				twoWay: true
 			},
 			avatar_url: {
-				type: Boolean,
+				type: String,
+				required: true,
+				twoWay: true
+			},
+			accesstoken: {
+				type: String,
 				required: true,
 				twoWay: true
 			}
 		},
-		created: function(){
+		created(){
 			this.isShowSidebar = false
 		},
 		methods: {
-			signIn: function(){
-				var self = this
-				self.accesstoken = this.accessToken.trim()
-				if(self.accesstoken.length > 0){
+			signIn(){
+				this.accesstoken = this.accessTokenInput.trim()
+				if(this.accesstoken.length > 0){
 					api.user.validateAccessToken({
-						accesstoken: self.accessToken
-					}, function(data){
+						accesstoken: this.accessTokenInput
+					}, (data) => {
 						if(data.success){
 							// alert("验证成功");
 							console.log(data)
-							localStorage.loginname = self.loginname = data.loginname
-							localStorage.avatar_url = self.avatar_url = data.avatar_url
+							localStorage.loginname = this.loginname = data.loginname
+							localStorage.avatar_url = this.avatar_url = data.avatar_url
 							localStorage.user_id = data.id
-							localStorage.accesstoken = self.accesstoken
+							localStorage.accesstoken = this.accesstoken = this.accessTokenInput
 
-							self.isLogin = true
-							var redirect = decodeURIComponent(self.$route.query.redirect || '/');
-							self.$route.router.go(redirect)
+							this.isLogin = true
+							var redirect = decodeURIComponent(this.$route.query.redirect || '/');
+							this.$route.router.go(redirect)
 						}
 					})
 				}

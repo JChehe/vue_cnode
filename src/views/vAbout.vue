@@ -28,7 +28,7 @@
 				twoway: true
 			}
 		},
-		created: function(){
+		created(){
 			this.isShowSidebar = false
 		}
 	}

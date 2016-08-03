@@ -5,14 +5,10 @@ import filters from "./filters"
 
 Vue.use(VueRouter)
 
-Object.keys(filters).forEach(function(k){
+Object.keys(filters).forEach((k) => {
   Vue.filter(k, filters[k])
 })
-/* eslint-disable no-new */
-// var app = new Vue({
-//   el: 'body',
-//   components: { App }
-// })
+
 
 var router = new VueRouter()
 
@@ -76,7 +72,7 @@ router.map({
 })
 
 
-router.beforeEach(function(transition) {
+router.beforeEach((transition) => {
     if (transition.to.auth) {
         if (localStorage.user_id) {
             transition.next();

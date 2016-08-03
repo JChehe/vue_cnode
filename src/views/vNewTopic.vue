@@ -22,7 +22,7 @@
 	import api from "../api"
 
 	export default{
-		data: function(){
+		data(){
 			return {
 				tabSelected: "",
 				tabOptions: [
@@ -40,16 +40,18 @@
 				type: Boolean,
 				required: true,
 				twoway: true
+			},
+			accesstoken: {
+				type: String,
+				required: true
 			}
 		},
-		created: function(){
+		created(){
 			this.isShowSidebar = false
 		},
 		methods: {
-			newPost: function(){
-				var self = this
+			newPost(){
 
-				// alert("需要填写完整")
 				if(this.tabSelected === ""){
 					alert("未选择主题类型")
 				}else if(this.postTitle.trim().length < 10){
@@ -58,14 +60,14 @@
 					alert("主题内容为空")
 				}else{
 					api.topic.newTopic({
-						accesstoken: "5f9f0171-db81-4578-8af4-9033031b69c2",
-						title: self.postTitle,
-						content: self.postContent,
-						tab: self.tabSelected
-					}, function(data){
+						accesstoken: this.accesstoken,
+						title: this.postTitle,
+						content: this.postContent,
+						tab: this.tabSelected
+					}, (data) => {
 						console.log(data)
 						// alert("发帖成功")
-						self.$route.router.go({name:"list"})
+						this.$route.router.go({name:"list"})
 					})
 				}
 			}

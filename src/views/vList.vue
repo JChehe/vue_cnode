@@ -16,7 +16,8 @@
 			</li>
 		</ul>
 	</div>
-	<button type="button" class="loadMoreBtn" @click="getMoreTopic">加载更多</button>
+
+	<button v-if="!isFirstLoad" type="button" class="loadMoreBtn" @click="getMoreTopic">{{isLoading ? "正在加载" :"加载更多"}}</button>
 </template>
 
 <script>
@@ -26,12 +27,14 @@
 		components: {
 			vuserpanel
 		},
-		data: function(){
+		data(){
 			return{
 				topics: [],
 				page: 1,
 				limit: 30,
-				tab: "all"
+				tab: "all",
+				isFirstLoad: true,
+				isLoading: false
 			}
 		},
 		props: {
@@ -40,7 +43,8 @@
 				twoWay: true
 			}
 		},
-		
+		ready(){
+		},
 		route: {
 			data(transition){
 				var query = transition.to.query;
@@ -54,7 +58,7 @@
 		},
 		
 		methods:{
-			tabToName: function(topic){
+			tabToName(topic){
 				var name = "";
 				if(topic.good == true){
 					name = "精华"
@@ -69,25 +73,35 @@
 				return name;
 			},
 			
-			getTopicList: function(opts){
-				var self = this;
+			getTopicList(opts){
 				if (opts == undefined){
 					opts = {}
 				}
+
+
 				api.topic.getTopicList({
-					tab: opts.tab || self.tab,
-					page: opts.page || self.page,
-					limit: opts.limit || self.limit
-				}, function(data){
+					tab: opts.tab || this.tab,
+					page: opts.page || this.page,
+					limit: opts.limit || this.limit
+				}, (data) => {
 					if(data.success){
 						// self.topics = self.topics.concat(data.data)
-						self.topics = data.data
+						this.topics = data.data
+						this.isLoading = false
+						if(this.isFirstLoad){
+							this.isFirstLoad = false
+						}
 					}
 				})
 			},
-			getMoreTopic: function(){
-				this.limit += 30
-				this.getTopicList({tab: this.tab})
+			getMoreTopic(){
+
+				if(!this.isLoading){
+					this.isLoading = true
+					
+					this.limit += 30
+					this.getTopicList({tab: this.tab})
+				}
 			}
 
 		}

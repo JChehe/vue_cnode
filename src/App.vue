@@ -4,7 +4,7 @@
     <main>
       <vheader :title="title" :is-show-sidebar.sync="isShowSidebar" :show.sync="showConfirm"></vheader>
       <div id="content">
-        <router-view :is-show-sidebar.sync="isShowSidebar" :is-login.sync="isLogin" :avatar_url.sync="avatar_url" :loginname.sync="loginname"></router-view>
+        <router-view :is-show-sidebar.sync="isShowSidebar" :is-login.sync="isLogin" :avatar_url.sync="avatar_url" :loginname.sync="loginname" :accesstoken.sync="accesstoken"></router-view>
       </div>
     </main>
     <vconfirm :is-show-confirm.sync="isShowConfirm" :is-show-sidebar.sync="isShowSidebar" :is-login.sync="isLogin">
@@ -48,30 +48,33 @@ export default {
       isShowConfirm: false,
       isLogin: localStorage.loginname ? true : false,
       loginname: localStorage.loginname,
-      avatar_url: localStorage.avatar_url
+      avatar_url: localStorage.avatar_url,
+      accesstoken: localStorage.accesstoken
     }
   },
   created: function(){
-    // alert(this.$route.params)
-    console.log(this.$route)
-    var router = this.$route
     var temTitle = "";
-    var routerName = router.name.trim()
-    if(routerName === "list"){
-      switch (router.query.tab){
-        case "all": temTitle = "全部"; break;
-        case "good": temTitle = "精华"; break;
-        case "share": temTitle = "分享"; break;
-        case "ask": temTitle = "问答"; break;
-        case "job": temTitle = "招聘"; break;
+    
+    this.$route.router.afterEach((transition) => {
+      var router = transition.to
+      var routerName = router.name.trim()
+      if(routerName === "list"){
+        switch (router.query.tab){
+          case "all": temTitle = "全部"; break;
+          case "good": temTitle = "精华"; break;
+          case "share": temTitle = "分享"; break;
+          case "ask": temTitle = "问答"; break;
+          case "job": temTitle = "招聘"; break;
+        }
+      }else{
+        if(routerName === "message") temTitle = "消息"
+        else if(routerName === "about") temTitle = "关于"
+        else if(routerName === "perinfo") temTitle = "个人信息"
+        else if(routerName === "login") temTitle = "登录"
+        else if(routerName === "newtopic") temTitle = "发帖"
       }
-    }else{
-      if(routerName === "message") temTitle = "消息"
-      else if(routerName === "about") temTitle = "关于"
-      else if(routerName === "perinfo") temTitle = "个人信息"
-      else if(routerName === "newtopic") temTitle = "发帖"
-    }
-    this.title = temTitle
+      this.title = temTitle
+    })
   },
   watch:{
     isShowSidebar: function(){
@@ -82,9 +85,6 @@ export default {
           document.body.style.position = "static"
         }, 300)
       }
-    },
-    isShowConfirm: function(){
-      console.log("ajsds")
     }
   },
   methods: {

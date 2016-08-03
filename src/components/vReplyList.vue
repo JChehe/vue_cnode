@@ -41,7 +41,7 @@ export default {
   components: {
     vuserpanel
   },
-	data: function(){
+	data(){
 		return{
       replyContent: ""
 		}
@@ -51,51 +51,56 @@ export default {
 			type: Array,
 			required: true
 			// default: []
-		}
+		},
+    accesstoken: {
+      type: String,
+      required: true
+    },
+    topicId: {
+      type: String,
+      required: true
+    }
 	},
 	methods: {
-		toggleReply: function(index){
+		toggleReply(index){
       
       var reply = this.replies[index] 
-      this.replies.forEach(function(r, i){
+      this.replies.forEach((r, i) => {
         if (i !== index){
           r.isShowReply = false
         }
       })
       reply.isShowReply = !reply.isShowReply
 		},
-    replyToComment: function(index){
-      var self = this
-
-      var replyId = self.replies[index].id
+    replyToComment(index){
+      var replyId = this.replies[index].id
 
       api.reply.newReply({
         accesstoken: localStorage.accesstoken,
-        topic_id: self.postId,
-        content: self.replyContent,
+        topic_id: this.postId,
+        content: this.replyContent,
         reply_id: replyId
-      }, function(data){
+      }, (data) => {
         if(data.success){
           // self.getTopic() // 更新数据
-          self.$parent.getTopic()
+          this.$parent.getTopic()
         }
       })
       // console.log(reply)
     },
-    toggleUps: function(index){
+    toggleUps(index){
       var reply = this.replies[index]
-      console.log(reply)
+
       api.reply.ups({
         reply_id: reply.id,
-        accesstoken: "5f9f0171-db81-4578-8af4-9033031b69c2"
-      }, function(data){
+        accesstoken: this.accesstoken
+      }, (data) => {
         if(data.success){
-          console.log(data)
           if(data.action === "down"){
-            var index = reply.ups.indexOf("5608e997272b724e5efefd08");
+            var index = reply.ups.indexOf(this.topicId);
             reply.ups.splice(index, 1)
           }else{
-            reply.ups.push("5608e997272b724e5efefd08");
+            reply.ups.push(this.topicId);
           }
         }
       })

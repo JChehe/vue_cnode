@@ -13,7 +13,7 @@
 
 <script>
 	export default{
-		data: function(){
+		data(){
 			return {
 
 			}
@@ -32,7 +32,7 @@
       }
 		},
     methods:{
-      toggleSidebar: function(){
+      toggleSidebar(){
         this.isShowSidebar = true
       }
     }

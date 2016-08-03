@@ -66,7 +66,7 @@
 import api from "../api"
 
 	export default{
-		data: function(){
+		data(){
 			return {
 				activeItem: 0,
 				allMessages: {}
@@ -77,22 +77,25 @@ import api from "../api"
 				type: Boolean,
 				required: true,
 				twoway: true
+			},
+			accesstoken: {
+				type: String,
+				required: true
 			}
 		},
-		created: function(){
+		created(){
 			this.getMessages()
 			this.isShowSidebar = false
 		},
 		methods: {
-			changeItem: function(itemIndex){
+			changeItem(itemIndex){
 				this.activeItem = itemIndex
 			},
-			getMessages: function(){
-				var self = this
+			getMessages(){
 				api.message.getMessage({
-					accesstoken: localStorage.accesstoken
-				}, function(data){
-					self.allMessages = data.data
+					accesstoken: this.accesstoken
+				}, (data) => {
+					this.allMessages = data.data
 				})
 			}
 		}

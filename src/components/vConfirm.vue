@@ -34,19 +34,20 @@
 			}
 		},
 		watch :{
-			isShowConfirm: function(){
+			isShowConfirm(){
 				console.log("confirm")
 			}
 		},
 		methods: {
-			hide: function(){
+			hide(){
 				this.isShowConfirm = false
 			},
-			confirmHandler: function(){
+			confirmHandler(){
 				localStorage.loginname = localStorage.avatar_url = localStorage.user_id = localStorage.accesstoken = ""
 				this.isShowConfirm = false
 				this.isShowSidebar = false
 				this.isLogin = false
+				this.$route.router.go({path: "/list"})
 			}
 		}
 	}
@@ -68,10 +69,14 @@
 	.confirm-dialog{
 		width: 50%;
 		max-width: 360px;
-		margin: 10% auto 0;
+		margin: 0 auto;
+		position: absolute;
+		top: 50%;
+		left: 50%;
 		/*padding: 15px;*/
 		border-radius: 5px;
 		background-color: #fff;
+		transform: translate(-50%, -50%) scale(1);
 		transition: all .3s
 	}
 	.confirm-footer{
@@ -96,15 +101,18 @@
 		position: relative;
 		cursor: pointer;
 	}
-
+	
+	.confirm-transition{
+		transition: all .3s
+	}
 	.confirm-enter, .confirm-leave {
-  opacity: 0;
-}
+	  opacity: 0;
+	}
 
-.confirm-enter .confirm-container,
-.confirm-leave .confirm-container {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
-}
+	.confirm-enter .confirm-dialog,
+	.confirm-leave .confirm-dialog {
+	  -webkit-transform: translate(-50%, -50%) scale(1.1);
+	  transform: translate(-50%, -50%) scale(1.1);
+	}
 
 </style>

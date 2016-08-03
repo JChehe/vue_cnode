@@ -7,7 +7,7 @@ export default{
 	 *   (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
 	 *   (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18 
 	 */
-	fmtDate: function(date, fmt) { //author: meizz 
+	fmtDate(date, fmt) { //author: meizz 
 	    var o = {
 	        "M+": date.getMonth() + 1, //月份 
 	        "d+": date.getDate(), //日 
@@ -29,7 +29,7 @@ export default{
 	/**
 	 * 由于moment库加进来太大了，自定义了formnow函数，待完善阶段
 	 */
-	MillisecondToDate: function(msd) {
+	MillisecondToDate(msd) {
 	    var time = parseFloat(msd) / 1000;
 	    var str ="";
 	    if (null != time && "" != time) {

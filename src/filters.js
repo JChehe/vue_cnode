@@ -1,7 +1,7 @@
 import utils from "./utils"
 
 export default{
-	getLastTimeStr: (time, friendly) => {
+	getLastTimeStr(time, friendly){
 	    if (friendly) {
 	        return utils.MillisecondToDate(new Date() - new Date(time));
 	    } else {

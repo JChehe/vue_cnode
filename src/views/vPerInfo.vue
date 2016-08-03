@@ -12,13 +12,13 @@
 
 	<div class="tab">
 		<ul class="tab-nav">
-			<li :class="{'active': activeItem === 0}" @click="changeItem(0)">已读信息</li>
-			<li :class="{'active': activeItem === 1}" @click="changeItem(1)">未读信息</li>
+			<li :class="{'active': activeItem === 0}" @click="changeItem(0)">最近回复</li>
+			<li :class="{'active': activeItem === 1}" @click="changeItem(1)">最新发布</li>
 		</ul>
 		<div class="tab-content">
 			<div class="tabpanel" :class="{'active': activeItem === 0}">
 				<ul>
-					<li v-for="topic in userInfo.recent_topics">
+					<li v-for="topic in userInfo.recent_replies">
 						<div class="header">
 							<vuserpanel :avatar="topic.author.avatar_url">
 								<p slot="one">{{topic.title}}</p>
@@ -40,7 +40,7 @@
 			</div>
 			<div class="tabpanel" :class="{'active': activeItem === 1}">
 				<ul>
-					<li v-for="topic in userInfo.recent_replies">
+					<li v-for="topic in userInfo.recent_topics">
 						<div class="header">
 							<div class="left">
 								<img :src="topic.author.avatar_url">
@@ -69,7 +69,7 @@
 		components: {
 			vuserpanel: vUserPanel
 		},
-    data: function(){
+    data(){
       return {
         activeItem: 0,
         userInfo: {}
@@ -80,20 +80,23 @@
     		type: Boolean,
     		required: true,
     		twoway: true
+    	},
+    	loginname: {
+    		type: String,
+    		required: true
     	}
     },
    
-    created: function(){
+    created(){
     	this.isShowSidebar = false
-    	var self = this
-        api.user.getUserInfo({
-          loginname: "JChehe",
-        }, function(data){
-          self.userInfo = data.data
-        })
+      api.user.getUserInfo({
+        loginname: this.loginname,
+      }, (data) => {
+        this.userInfo = data.data
+      })
     },
     methods: {
-			changeItem: function(itemIndex){
+			changeItem(itemIndex){
 				this.activeItem = itemIndex
 			}
 		}
@@ -169,6 +172,10 @@
 		.tabpanel li{
 			padding: 5px;
 			border-bottom: solid 1px #d4d4d4
+		}
+		.tabpanel .header div>p{
+			margin-bottom: 0;
+			line-height: 22px;
 		}
 		.header{
 			overflow: hidden;

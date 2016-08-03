@@ -4,7 +4,7 @@ const apiUrl = "https://cnodejs.org/api/v1/"
 
 export default {
     topic: {
-        getTopicList: function(opts, callback) {
+        getTopicList(opts, callback) {
             reqwest({
                 url: apiUrl + "topics",
                 method: "get",
@@ -14,15 +14,15 @@ export default {
                     limit: opts.limit,
                     mdrender: opts.mdrender
                 },
-                success: function(data) {
+                success(data) {
                     callback(data)
                 },
-                error: function(err) {
+                error(err) {
                     console.log(err)
                 }
             })
         },
-        getTopic: function(opts, callback) {
+        getTopic(opts, callback) {
             reqwest({
                 url: apiUrl + "topic/" + opts._id,
                 method: "get",
@@ -30,15 +30,15 @@ export default {
                     mdrender: opts.mdrender,
                     accesstoken: opts.accesstoken
                 },
-                success: function(data) {
+                success(data) {
                     callback(data)
                 },
-                error: function(err) {
+                error(err) {
                     console.log(err)
                 }
             })
         },
-        newTopic: function(opts, callback) {
+        newTopic(opts, callback) {
             reqwest({
                 url: apiUrl + "topics",
                 method: "post",
@@ -48,17 +48,17 @@ export default {
                     tab: opts.tab, // only ask\share\job
                     content: opts.content
                 },
-                success: function(data) {
+                success(data) {
                     callback(data)
                 },
-                error: function(err) {
+                error(err) {
                     console.log(err)
                 }
             })
         }
     },
     collect: {
-        topicCollect: function(opts, callback) {
+        topicCollect(opts, callback) {
             reqwest({
                 url: apiUrl + "topic_collect/collect",
                 method: "get",
@@ -66,15 +66,15 @@ export default {
                     accesstoken: opts.accesstoken,
                     topic_id: opts.topic_id
                 },
-                callback: function(data) {
+                callback(data) {
                     callback(opts)
                 },
-                error: function(err) {
+                error(err) {
                     console.log(err)
                 }
             })
         },
-        topicDeCollect: function(opts, callback) {
+        topicDeCollect(opts, callback) {
             reqwest({
                 url: apiUrl + "topic_collect/de_collect",
                 method: "post",
@@ -82,29 +82,29 @@ export default {
                     accesstoken: opts.accesstoken,
                     topic_id: opts.topic_id
                 },
-                success: function(data) {
+                success(data) {
                     callback(data)
                 },
-                error: function(err) {
+                error(err) {
                     console.log(err)
                 }
             })
         },
-        getUserCollect: function(opts, callback) {
+        getUserCollect(opts, callback) {
             reqwest({
                 url: apiUrl + "topic_collect/" + opts.loginname,
                 method: "get",
-                success: function(data) {
+                success(data) {
                     callback(data)
                 },
-                error: function(err) {
+                error(err) {
                     console.log(err)
                 }
             })
         }
     },
     reply: {
-        newReply: function(opts, callback) {
+        newReply(opts, callback) {
             reqwest({
                 url: apiUrl + "topic/" + opts.topic_id + "/replies",
                 method: "post",
@@ -113,51 +113,51 @@ export default {
                     content: opts.content,
                     reply_id: opts.reply_id // 回复别人的评论
                 },
-                success: function(data) {
+                success(data) {
                     callback(data)
                 },
-                error: function(err) {
+                error(err) {
                     console.log(err)
                 }
             })
         },
-        ups: function(opts, callback) {
+        ups(opts, callback) {
             reqwest({
                 url: apiUrl + "reply/" + opts.reply_id + "/ups",
                 method: "post",
                 data: {
                     accesstoken: opts.accesstoken
                 },
-                success: function(data) {
+                success(data) {
                     callback(data)
                 },
-                error: function(err) {
+                error(err) {
                     console.log(err)
                 }
             })
         }
     },
     user: {
-        getUserInfo: function(opts, callback) {
+        getUserInfo(opts, callback) {
             reqwest({
                 url: apiUrl + "/user/" + opts.loginname,
                 method: "get",
-                success: function(data) {
+                success(data) {
                     callback(data)
                 },
-                error: function(err) {
+                error(err) {
                     console.log(err)
                 }
             })
         },
-        validateAccessToken: function(opts, callback) {
+        validateAccessToken(opts, callback) {
             reqwest({
                 url: apiUrl + "/accesstoken",
                 method: "post",
                 data: {
                     accesstoken: opts.accesstoken
                 },
-                success: function(data) {
+                success(data) {
                     callback(data);
 
                     // 返回格式
@@ -166,7 +166,7 @@ export default {
                     loginname: "JChehe"
                     success: true*/
                 },
-                error: function(err) {
+                error(err) {
                     console.log(err)
                 }
 
@@ -174,7 +174,7 @@ export default {
         }
     },
     message: {
-        getMessage: function(opts, callback) {
+        getMessage(opts, callback) {
             reqwest({
                 url: apiUrl + "/messages",
                 method: "get",
@@ -182,25 +182,25 @@ export default {
                     accesstoken: opts.accesstoken,
                     mdrender: opts.mdrender
                 },
-                success: function(data) {
+                success(data) {
                     callback(data)
                 },
-                error: function(err) {
+                error(err) {
                     console.log(err)
                 }
             })
         },
-        mark_all: function(opts, callback) {
+        mark_all(opts, callback) {
             reqwest({
                 url: apiUrl + "/message/" + opts.mark_all,
                 method: "post",
                 data: {
                     accesstoken: opts.accesstoken
                 },
-                success: function(data) {
+                success(data) {
                     callback(data)
                 },
-                error: function(err) {
+                error(err) {
                     console.log(err)
                 }
             })

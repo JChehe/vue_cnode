@@ -16,7 +16,7 @@
     <div class="topic-content">
       {{{topic.content}}}
     </div>
-    <vreplylist :replies="topic.replies" :topic-id="topic.id"></vreplylist>
+    <vreplylist :replies="topic.replies" :topic-id="topic.id" :accesstoken="accesstoken"></vreplylist>
     <div>
       <form @submit.prevent="replyHandler" class="reply-form">
         <textarea v-model="replyContent"></textarea>
@@ -35,30 +35,36 @@
       vreplylist: vReplyList,
       vuserpanel: vUserPanel
     },
-		data: function(){
+		data(){
       return {
         topic: {},
         replyContent: ""
       }
 		},
+    props: {
+      accesstoken: {
+        type: String,
+        reuqired: true,
+        twoWay: true
+      }
+    },
    
-		created: function(){
+		created(){
         // this.getTopic()
 		},
     watch: {
-      topicId: function(){
+      topicId(){
         
       }
     },
     route: {
-      data: function(transition){
+      data(transition){
         var topicId = transition.to.params.id
-        console.log("As")
         this.getTopic(topicId)
       }
     },
     methods:{
-      tabToName: function(tab){
+      tabToName(tab){
         var name = "";
         switch(tab) {
           case "good": name = "置顶"; break;
@@ -69,28 +75,24 @@
         }
         return name;
       },
-      getTopic: function(id){
-        var self = this;
-        
+      getTopic(id){
         api.topic.getTopic({
           _id: id
-        }, function(data){
-          data.data.replies.forEach(function(reply, index){
+        }, (data) => {
+          data.data.replies.forEach((reply, index) => {
             reply.isShowReply = false
           })
-          self.topic = data.data
+          this.topic = data.data
         })
       },
-      replyHandler: function(){
-        var self = this
-
+      replyHandler(){
         api.reply.newReply({
-          accesstoken: "5f9f0171-db81-4578-8af4-9033031b69c2",
-          topic_id: self.topicId,
-          content: self.replyContent
-        }, function(data){
+          accesstoken: this.accesstoken,
+          topic_id: this.topicId,
+          content: this.replyContent
+        }, (data) => {
           if(data.success){
-            self.getTopic() // 更新数据
+            this.getTopic() // 更新数据
           }
         })
       }

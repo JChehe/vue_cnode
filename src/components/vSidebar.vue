@@ -30,7 +30,7 @@
 
 <script>
 export default{
-	data:function(){
+	data(){
 		return {
       tab: this.$route.query.tab || "all",
 			itemSet:[
@@ -114,10 +114,10 @@ export default{
 	},
  
 	methods:{
-		hide: function(){
+		hide(){
 			this.isShowSidebar = false
 		},
-    change: function(tab, name){
+    change(tab, name){
       console.log(event.currentTarget.innerText)
       if(tab == undefined && event.currentTarget.dataset.view=="logout"){
          this.isShowConfirm = true        
@@ -125,7 +125,7 @@ export default{
       this.title = name
       this.tab = tab
     },
-    goEnter: function(){
+    goEnter(){
       var link = ""
       var redirect = this.$route.query.redirect
       if(this.$route.path!=="login" && !redirect){
@@ -134,13 +134,17 @@ export default{
       }else{
         this.isShowSidebar = false
       }
+
+      this.title = "登录"
+
     },
-    goUser: function(){
-      var self = this
+    goUser(){
+      this.title = "个人信息"
       this.$route.router.go({path: "/perinfo/"+this.loginname})
     },
-    logout: function(event){
+    logout(event){
       this.isShowConfirm = true
+      
     }
 	}
 }
