@@ -1,56 +1,28 @@
 <template>
 	<div class="tab">
 		<ul class="tab-nav">
-			<li :class="{'active': activeItem === 0}" @click="changeItem(0)">已读信息</li>
-			<li :class="{'active': activeItem === 1}" @click="changeItem(1)">未读信息</li>
+			<li v-for="messageType in allMessages" :class="{'active': activeItem === $index}" @click="changeItem($index)">{{ $index === 0 ? "已读信息" : "未读信息"}} <span v-if="$index===1 && unreadCount > 0">( {{unreadCount}} )</span></li>
 		</ul>
 		<div class="tab-content">
-			<div class="tabpanel" :class="{'active': activeItem === 0}">
+			<div class="tabpanel" v-for="messageType in allMessages" :class="{'active': activeItem === $index}">
+				<button v-if="$index===1 && unreadCount > 0" @click="makeAllRead">标为全部已读</button>
 				<ul>
-					<li v-for="message in allMessages.has_read_messages">
+					<li v-for="message in messageType">
 						<div class="header">
-							<div class="left">
-								<img :src="message.author.avatar_url">
-								<div>
-									<p>{{message.author.loginname}}</p>
-									<p>在回复中@了你</p>
-								</div>
-							</div>
+							<vuserpanel :avatar="message.author.avatar_url">
+								<p slot="one" v-link="{path:'/perinfo/'+message.author.loginname}">{{message.author.loginname}}</p>
+								<p slot="two">在回复中@了你</p>
+							</vuserpanel>
+							
 							<div class="right">
-								<p>{{message.reply.create_at}}</p>
+								<p>{{message.reply.create_at | getLastTimeStr true}}</p>
 							</div>
 						</div>
 						<div class="content">
 							<div class="">
 								{{{message.reply.content}}}
 							</div>
-							<div class="related-topic">
-								<h4>{{message.topic.title}}</h4>
-							</div>
-						</div>
-					</li>
-				</ul>
-			</div>
-			<div class="tabpanel" :class="{'active': activeItem === 1}">
-				<ul>
-					<li v-for="message in allMessages.hasnot_read_messages">
-						<div class="header">
-							<div class="left">
-								<img :src="message.author.avatar_url">
-								<div>
-									<p>{{message.author.loginname}}</p>
-									<p>在回复中@了你</p>
-								</div>
-							</div>
-							<div class="right">
-								<p>{{message.reply.create_at}}</p>
-							</div>
-						</div>
-						<div class="content">
-							<div class="">
-								{{{message.reply.content}}}
-							</div>
-							<div class="related-topic">
+							<div class="related-topic" v-link="{path: '/topic/' + message.topic.id}">
 								<h4>{{message.topic.title}}</h4>
 							</div>
 						</div>
@@ -64,12 +36,15 @@
 <script>
 
 import api from "../api"
-
+import vUserPanel from "../components/vUserPanel"
 	export default{
+		components:{
+			vuserpanel: vUserPanel
+		},
 		data(){
 			return {
 				activeItem: 0,
-				allMessages: {}
+				allMessages: []
 			}
 		},
 		props: {
@@ -81,10 +56,17 @@ import api from "../api"
 			accesstoken: {
 				type: String,
 				required: true
+			},
+			unreadCount: {
+				type: Number,
+				required: true,
+				twoWay: true,
+				default: 0
 			}
 		},
 		created(){
 			this.getMessages()
+			this.$root.getUnreadCount()
 			this.isShowSidebar = false
 		},
 		methods: {
@@ -95,7 +77,21 @@ import api from "../api"
 				api.message.getMessage({
 					accesstoken: this.accesstoken
 				}, (data) => {
-					this.allMessages = data.data
+					// this.allMessages = data.data
+					Object.keys(data.data).forEach((item, index)=>{
+						console.log(index)
+						this.allMessages.$set(index, data.data[item])
+					})
+				})
+			},
+			makeAllRead(){
+				api.message.markAll({
+					accesstoken: this.accesstoken
+				}, (data) => {
+					if(data.success){
+						this.unreadCount = 0
+						this.getMessages()
+					}
 				})
 			}
 		}
@@ -123,6 +119,10 @@ import api from "../api"
 			line-height: 36px;
 			font-size: 14px;
 			padding-bottom: 2px;
+			cursor: pointer;
+		}
+		.content{
+			padding-top: 15px;
 		}
 		.tab-nav li:not(:last-child):after{
 			content: "";
@@ -156,7 +156,7 @@ import api from "../api"
 			display: block;
 		}
 		.tabpanel li{
-			padding: 5px;
+			padding: 10px 5px;
 			border-bottom: solid 1px #d4d4d4
 		}
 		.header{
@@ -191,7 +191,10 @@ import api from "../api"
   	 .related-topic{
   	 	background-color: #f0f0f0;
   	 	padding: 5px;
-  	 	margin:10px 5px;
+  	 	margin:10px 0 0;
   	 	border-radius: 5px;
+  	 }
+  	 .related-topic h4 {
+  	 	margin-bottom: 0;
   	 }
 </style>

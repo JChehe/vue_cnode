@@ -12,10 +12,12 @@
 
       </div>
       <ul v-for="(index, items) in itemSet">
-      	<li v-for="item in items" v-link="{path: '/'+item.view, query:{'tab': item.tab}}" :class="{'active': item.tab == tab, 'tab': item.tab}" @click="change(item.tab, item.name)">
+      	<li v-for="item in items" v-link="{path: '/'+item.view, query:{'tab': item.tab}}" :class="{'active': item.tab == tab, 'tab': item.tab, 'unread': (item.view === 'message' && unreadCount > 0)}" @click="change(item.tab)">
       		<a href="javascript:;">
       			<i class="iconfont">{{{item.icon}}}</i>
 	      		{{item.name}}
+
+            <span class="unreadTip" v-if="item.view==='message' && unreadCount !== 0">( {{unreadCount}} )</span>
       		</a>
       	</li>
         <li v-if="isLogin && index==itemSet.length -1"><a @click="logout"><i class="iconfont">&#xe60d;</i> 注销</a></li>
@@ -110,19 +112,23 @@ export default{
       type: String,
       required: true,
       twoWay: true
+    },
+    unreadCount: {
+      type: Number,
+      required: true,
+      twoWay: true,
+      default: 0
     }
 	},
- 
 	methods:{
 		hide(){
 			this.isShowSidebar = false
 		},
-    change(tab, name){
+    change(tab){
       console.log(event.currentTarget.innerText)
       if(tab == undefined && event.currentTarget.dataset.view=="logout"){
          this.isShowConfirm = true        
       }
-      this.title = name
       this.tab = tab
     },
     goEnter(){
@@ -134,17 +140,13 @@ export default{
       }else{
         this.isShowSidebar = false
       }
-
-      this.title = "登录"
-
     },
     goUser(){
-      this.title = "个人信息"
       this.$route.router.go({path: "/perinfo/"+this.loginname})
+      this.hide()
     },
     logout(event){
       this.isShowConfirm = true
-      
     }
 	}
 }
@@ -239,5 +241,27 @@ export default{
     font-size: 16px;
   }
 
+  .message .unreadTip{
+
+  }
+
+  li.unread .iconfont{
+    color: #b1b15c;
+    display: inline-block;
+    transform-origin: 50% 0;
+    animation: shake 2.5s linear infinite;
+  }
+
+@keyframes shake{
+    0%,100%{
+      transform: rotateZ(0deg);
+    }
+    20%{
+      transform: rotateZ(15deg);
+    }
+    80%{
+      transform: rotateZ(-15deg);
+    }
+  }
 
 </style>

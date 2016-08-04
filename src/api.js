@@ -140,7 +140,7 @@ export default {
     user: {
         getUserInfo(opts, callback) {
             reqwest({
-                url: apiUrl + "/user/" + opts.loginname,
+                url: apiUrl + "user/" + opts.loginname,
                 method: "get",
                 success(data) {
                     callback(data)
@@ -152,7 +152,7 @@ export default {
         },
         validateAccessToken(opts, callback) {
             reqwest({
-                url: apiUrl + "/accesstoken",
+                url: apiUrl + "accesstoken",
                 method: "post",
                 data: {
                     accesstoken: opts.accesstoken
@@ -176,7 +176,7 @@ export default {
     message: {
         getMessage(opts, callback) {
             reqwest({
-                url: apiUrl + "/messages",
+                url: apiUrl + "messages",
                 method: "get",
                 data: {
                     accesstoken: opts.accesstoken,
@@ -190,9 +190,24 @@ export default {
                 }
             })
         },
-        mark_all(opts, callback) {
+        unreadCount(opts, callback) {
             reqwest({
-                url: apiUrl + "/message/" + opts.mark_all,
+                url: apiUrl + "message/count",
+                method: "get",
+                data: {
+                  accesstoken: opts.accesstoken
+                },
+                success(data) {
+                    callback(data)
+                },
+                error(err) {
+                    console.log(err)
+                }
+            })
+        },
+        markAll(opts, callback) {
+            reqwest({
+                url: apiUrl + "message/mark_all",
                 method: "post",
                 data: {
                     accesstoken: opts.accesstoken

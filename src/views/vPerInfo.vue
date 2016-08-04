@@ -12,45 +12,19 @@
 
 	<div class="tab">
 		<ul class="tab-nav">
-			<li :class="{'active': activeItem === 0}" @click="changeItem(0)">最近回复</li>
-			<li :class="{'active': activeItem === 1}" @click="changeItem(1)">最新发布</li>
+			<li v-for="tabItem in tabDataSet" :class="{'active': activeItem === $index}" @click="changeItem($index)">{{ $index === 0 ? "创建的话题" : "参与的话题"}}</li>
 		</ul>
 		<div class="tab-content">
-			<div class="tabpanel" :class="{'active': activeItem === 0}">
+			<div v-for="tabData in tabDataSet" class="tabpanel" :class="{'active': activeItem === $index}">
 				<ul>
-					<li v-for="topic in userInfo.recent_replies">
+					<li v-for="item in tabData">
 						<div class="header">
-							<vuserpanel :avatar="topic.author.avatar_url">
-								<p slot="one">{{topic.title}}</p>
-								<p slot="two">{{topic.author.loginname}}</p>
+							<vuserpanel :avatar="item.author.avatar_url">
+								<p slot="one" v-link="{path: '/topic/' + item.id}">{{item.title}}</p>
+								<p slot="two" v-link="{path: '/perinfo/' + item.author.loginname}">{{item.author.loginname}}</p>
 							</vuserpanel>
-							<!-- <div class="left">
-								<img :src="topic.author.avatar_url">
-								<div>
-									<p>{{topic.title}}</p>
-									<p>{{topic.author.loginname}}</p>
-								</div>
-							</div> -->
 							<div class="right">
-								<p>{{topic.last_reply_at | getLastTimeStr true}}</p>
-							</div>
-						</div>
-					</li>
-				</ul>
-			</div>
-			<div class="tabpanel" :class="{'active': activeItem === 1}">
-				<ul>
-					<li v-for="topic in userInfo.recent_topics">
-						<div class="header">
-							<div class="left">
-								<img :src="topic.author.avatar_url">
-								<div>
-									<p>{{topic.title}}</p>
-									<p>{{topic.author.loginname}}</p>
-								</div>
-							</div>
-							<div class="right">
-								<p>{{topic.last_reply_at}}</p>
+								<p>{{item.last_reply_at | getLastTimeStr true}}</p>
 							</div>
 						</div>
 					</li>
@@ -61,8 +35,8 @@
 </template>
 
 <script>
-    import api from "../api"
-  	import vUserPanel from "../components/vUserPanel"
+  import api from "../api"
+	import vUserPanel from "../components/vUserPanel"
 
     
 	export default {
@@ -72,7 +46,8 @@
     data(){
       return {
         activeItem: 0,
-        userInfo: {}
+        userInfo: {},
+        tabDataSet: []
       }
     },
     props: {
@@ -89,15 +64,28 @@
    
     created(){
     	this.isShowSidebar = false
-      api.user.getUserInfo({
-        loginname: this.loginname,
-      }, (data) => {
-        this.userInfo = data.data
-      })
+    	console.log(this.$route.params.loginname)
+      this.getUserInfo()
     },
+    route: {
+    	data(transition){ //  监听
+	    	this.getUserInfo()
+	    }	
+    },
+ 
     methods: {
 			changeItem(itemIndex){
 				this.activeItem = itemIndex
+			},
+			getUserInfo(){
+				api.user.getUserInfo({
+	        loginname:  this.$route.params.loginname || this.loginname,
+	      }, (data) => {
+	        this.userInfo = data.data
+	        this.tabDataSet.$set(0, data.data.recent_topics)
+	        this.tabDataSet.$set(1, data.data.recent_replies)
+	        console.log(data.data)
+	      })
 			}
 		}
 	}
@@ -141,6 +129,7 @@
 			line-height: 36px;
 			font-size: 14px;
 			padding-bottom: 2px;
+			cursor: pointer;
 		}
 		.tab-nav li:not(:last-child):after{
 			content: "";

@@ -1,10 +1,10 @@
 <template>
   <div id="app" :class="{ 'offcanvas-page': isShowSidebar, 'show-offcanvas': isShowSidebar}" >
-    <vSidebar :is-show-sidebar.sync="isShowSidebar" :is-show-confirm.sync="isShowConfirm" :is-login.sync="isLogin" :title.sync="title" :avatar_url.sync="avatar_url" :loginname.sync="loginname"></vSidebar>  
+    <vSidebar :is-show-sidebar.sync="isShowSidebar" :is-show-confirm.sync="isShowConfirm" :is-login.sync="isLogin" :title.sync="title" :avatar_url.sync="avatar_url" :loginname.sync="loginname" :unread-count.sync="unreadCount"></vSidebar>  
     <main>
       <vheader :title="title" :is-show-sidebar.sync="isShowSidebar" :show.sync="showConfirm"></vheader>
       <div id="content">
-        <router-view :is-show-sidebar.sync="isShowSidebar" :is-login.sync="isLogin" :avatar_url.sync="avatar_url" :loginname.sync="loginname" :accesstoken.sync="accesstoken"></router-view>
+        <router-view :is-show-sidebar.sync="isShowSidebar" :is-login.sync="isLogin" :avatar_url.sync="avatar_url" :loginname.sync="loginname" :accesstoken.sync="accesstoken" :unread-count.sync="unreadCount"></router-view>
       </div>
     </main>
     <vconfirm :is-show-confirm.sync="isShowConfirm" :is-show-sidebar.sync="isShowSidebar" :is-login.sync="isLogin">
@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import api from "./api"
+
 import vheader from './components/vHeader'
 import vsidebar from './components/vSidebar'
 import vlist from './views/vList'
@@ -49,12 +51,13 @@ export default {
       isLogin: localStorage.loginname ? true : false,
       loginname: localStorage.loginname,
       avatar_url: localStorage.avatar_url,
-      accesstoken: localStorage.accesstoken
+      accesstoken: localStorage.accesstoken,
+      unreadCount: 0
     }
   },
   created: function(){
     var temTitle = "";
-    
+    this.getUnreadCount()
     this.$route.router.afterEach((transition) => {
       var router = transition.to
       var routerName = router.name.trim()
@@ -90,6 +93,13 @@ export default {
   methods: {
     showConfirm: function(){
       this.isShowConfirm = !this.isShowConfirm
+    },
+    getUnreadCount(){
+      api.message.unreadCount({
+        accesstoken: this.accesstoken
+      },(data) => {
+        this.unreadCount = data.data
+      })
     }
   }
 }
