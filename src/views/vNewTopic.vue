@@ -76,6 +76,11 @@
 </script>
 
 <style scoped>
-	
-
+	input[name="title"]{
+		width: 100%;
+		max-width: 400px;
+	}
+	textarea{
+		min-height: 260px;
+	}
 </style>

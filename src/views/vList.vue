@@ -5,7 +5,7 @@
 				<h3 class="title"><span class="tab">{{tabToName(topic)}}</span>{{topic.title}}</h3>
 				<div class="info">
 					<vuserpanel :avatar="topic.author.avatar_url">
-						<p slot="one">{{topic.author.loginname}}</p>
+						<p slot="one" v-link="{path: '/perinfo/' + topic.author.loginname}">{{topic.author.loginname}}</p>
 						<p slot="two">{{topic.create_at | getLastTimeStr true}}</p>
 					</vuserpanel>
 					<div class="right">
@@ -116,6 +116,7 @@
 			background-color: #fff;
 			border-bottom: 1px solid #d5dbdb;
   	 }
+  	 
   	 .topic-list .tab{
   	 	border-radius: 4px;
   	 	padding: 4px 6px;
@@ -162,7 +163,9 @@
   	 .right strong{
   	 	color: #42b983
   	 }
-		
+		.title{
+  	 	cursor: pointer;
+  	 }
 		.loadMoreBtn{
 			width: 100%;
 			max-width: none;

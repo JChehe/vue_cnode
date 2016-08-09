@@ -76,14 +76,14 @@ export default {
       var replyId = this.replies[index].id
 
       api.reply.newReply({
-        accesstoken: localStorage.accesstoken,
-        topic_id: this.postId,
+        accesstoken: this.accesstoken,
+        topic_id: this.topicId,
         content: this.replyContent,
         reply_id: replyId
       }, (data) => {
         if(data.success){
           // self.getTopic() // 更新数据
-          this.$parent.getTopic()
+          this.$parent.getTopic(this.topicId)
         }
       })
       // console.log(reply)
@@ -121,65 +121,67 @@ export default {
 		float: right;
 	}
 	.reply-list{
-			margin-top: 15px;
-  	}
-  	.reply-list .header{
-  		background-color: #f6f6f6;
-  		padding: 10px;
-  		border-radius: 3px 3px 0 0;
-  	}
-    .reply-list .header h4{
-      margin-bottom: 0;
-    }
-  	.like-btn, .reply-btn{
-			float: left;
-  	}
-  	.like-btn{
-  		margin-right: 6px;
-  	}
-    .reply-btn{
-      margin-top: 2px
-    }
-  	.reply-list ul{
-  		padding: 10px;
-  	}
+		margin-top: 15px;
+	}
+	.reply-list .header{
+		background-color: #f6f6f6;
+		padding: 10px;
+		border-radius: 3px 3px 0 0;
+	}
+  .reply-list .header h4{
+    margin-bottom: 0;
+  }
+	.like-btn, .reply-btn{
+		float: left;
+	}
+	.like-btn{
+		margin-right: 6px;
+	}
+  .reply-btn{
+    margin-top: 2px
+  }
+	.reply-list ul{
+		padding: 10px;
+	}
 
-  	.reply-list ul li{
-  		padding: 6px;
-  		border-bottom: 1px solid #f0f0f0;
-  		overflow: hidden;
-  	}
-  	.reply-form{
-  		clear: both;
-  	}
-  	.reply-form textarea{
-  		width: 100%;
-  		resize: none;
-  		margin-top: 12px;
-  		border: 1px solid #d5dbdb;
-  		border-radius: 3px;
-  		height: 88px;
-  	}
-  	.reply-form textarea+button{
-  		background-color: #4fc08d;
-  		color: #fff;
-  		border: 0;
-  		width: 100%;
-  		line-height: 28px;
-  	}
-  	.left p{
-  		font-size: 14px;
-  		line-height: 1.6;
-  	}
-  	.reply-list .left img{
-  		width: 32px;
-  		height: 32px;
-  		margin-top: 6px;
-  	}
+	.reply-list ul li{
+		padding: 6px;
+		border-bottom: 1px solid #f0f0f0;
+		overflow: hidden;
+	}
+	.reply-form{
+		clear: both;
+	}
+	.reply-form textarea{
+		width: 100%;
+		resize: none;
+		margin-top: 12px;
+		border: 1px solid #d5dbdb;
+		border-radius: 3px;
+    height: 60px;
+    display: block;
+    margin-bottom: 5px;
+	}
+	.reply-form textarea+button{
+    width: 80px;
+		color: #fff;
+		border: 0;
+		line-height: 28px;
+	}
+	.left p{
+		font-size: 14px;
+		line-height: 1.6;
+	}
+	.reply-list .left img{
+		width: 32px;
+		height: 32px;
+		margin-top: 6px;
+	}
 
-  	.user{
-  		overflow: hidden;
-  		margin: 10px 0;
-  	}
+	.user{
+		overflow: hidden;
+		margin: 10px 0;
+	}
+  
 
 </style>

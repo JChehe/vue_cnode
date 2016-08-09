@@ -36,21 +36,24 @@
 
 <style scoped>
 	ul{
-		padding: 0 15px;
+		padding: 0 15px 0;
 		background-color: #f7f7f7
 	}
 	ul li{
+		padding: 15px 0;
+	}
+	ul li:not(:last-child){
+		border-bottom: 1px solid #d5dbdb;
 
 	}
 	ul li h4{
 		font-size: 16px;
 		line-height: 1.5;
 		color: #2c3e50;
-		margin: 1em 0;
+		margin-bottom: 8px;
 	}
 	ul li h4+p{
 		font-size: 14px;
-		padding-bottom: 15px;
-		border-bottom: 1px solid #d5dbdb;
+		margin-bottom: 0
 	}
 </style>

@@ -20,11 +20,11 @@
 					<li v-for="item in tabData">
 						<div class="header">
 							<vuserpanel :avatar="item.author.avatar_url">
-								<p slot="one" v-link="{path: '/topic/' + item.id}">{{item.title}}</p>
-								<p slot="two" v-link="{path: '/perinfo/' + item.author.loginname}">{{item.author.loginname}}</p>
+								<p slot="one" v-link="{path: '/perinfo/' + item.author.loginname}">{{item.author.loginname}}</p>
+								<p slot="two" v-link="{path: '/topic/' + item.id}">{{item.title}}</p>
 							</vuserpanel>
 							<div class="right">
-								<p>{{item.last_reply_at | getLastTimeStr true}}</p>
+								<p class="date">{{item.last_reply_at | getLastTimeStr true}}</p>
 							</div>
 						</div>
 					</li>
@@ -112,66 +112,73 @@
 	*,*:before,*:after{
 		box-sizing: border-box;
 	}
-		ul{
-			overflow: hidden;
-			list-style: none;
-		}
-		.tab-nav{
-			padding: 0;
-			text-align: center;
-			/*overflow: hidden;*/
-		}
-		.tab-nav li{
-			float: left;
-			width: 50%;
-			border-bottom: solid 1px #d4d4d4;
-			position: relative;
-			line-height: 36px;
-			font-size: 14px;
-			padding-bottom: 2px;
-			cursor: pointer;
-		}
-		.tab-nav li:not(:last-child):after{
-			content: "";
-			position: absolute;
-			right: 0;
-			top: 0;
-			bottom: 0;
-			width: 1px;
-			background-color: #d4d4d4;
-		}
-		.tab-nav li.active{
-			border-bottom:2px solid #42b983;
-			color: #42b983;
-			padding-bottom: 1px;
-		}
+	ul{
+		overflow: hidden;
+		list-style: none;
+	}
+	.tab-nav{
+		padding: 0;
+		text-align: center;
+		/*overflow: hidden;*/
+	}
+	.tab-nav li{
+		float: left;
+		width: 50%;
+		border-bottom: solid 1px #d4d4d4;
+		position: relative;
+		line-height: 36px;
+		font-size: 14px;
+		padding-bottom: 2px;
+		cursor: pointer;
+	}
+	.tab-nav li:not(:last-child):after{
+		content: "";
+		position: absolute;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		width: 1px;
+		background-color: #d4d4d4;
+	}
+	.tab-nav li.active{
+		border-bottom:2px solid #42b983;
+		color: #42b983;
+		padding-bottom: 1px;
+	}
 
-		.tab-content{
-			position: relative;
-			clear:both;
-		}
-		.tabpanel{
-			width: 100%;
-			padding: 10px;
-			display: none;
-		}
-		.tabpanel.active{
-			display: block;
-		}
-		.tabpanel li{
-			padding: 5px;
-			border-bottom: solid 1px #d4d4d4
-		}
-		.tabpanel .header div>p{
-			margin-bottom: 0;
-			line-height: 22px;
-		}
-		.header{
-			overflow: hidden;
-		}
-		.left{
-  	 	float: left;
-  	 	overflow: hidden;
+	.tab-content{
+		position: relative;
+		clear:both;
+	}
+	.tabpanel{
+		width: 100%;
+		padding: 10px;
+		display: none;
+	}
+	.tabpanel.active{
+		display: block;
+	}
+	.tabpanel li{
+		position: relative;
+		padding: 5px;
+		border-bottom: solid 1px #d4d4d4
+	}
+	.tabpanel .header div>p{
+		margin-bottom: 0;
+		overflow: hidden;
+		line-height: 22px;
+	}
+	.header{
+		overflow: hidden;
+	}
+	.header .date{
+		position: absolute;
+		right: 5px;
+		top: 5px;
+	}
+	.left{
+	 	float: left;
+	 	overflow: hidden;
   	 }
 
   	 .left img{

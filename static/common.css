@@ -51,7 +51,6 @@ address, blockquote, dl, fieldset, figure, ol, p, pre, ul{
 
 textarea {
     width: 100%;
-    min-height: 260px;
 }
 
 input[type="text"],

@@ -83,6 +83,7 @@
             reply.isShowReply = false
           })
           this.topic = data.data
+          console.log(this.topic)
         })
       },
       replyHandler(){
@@ -103,12 +104,12 @@
 
 <style scoped>
   .tab{
-      border-radius: 4px;
-      padding: 2px 6px;
-      color: #fff;
-      font-size: 14px;
-      margin-right: 6px;
-      text-align: center;
+    border-radius: 4px;
+    padding: 2px 6px;
+    color: #fff;
+    font-size: 14px;
+    margin-right: 6px;
+    text-align: center;
   }
   .top.tab {
     background-color: #E74C3C
@@ -126,9 +127,9 @@
     background-color: #3498DB
   }
 
-.reply-form textarea{
-  min-height: 80px;
-}
+  .reply-form textarea{
+    min-height: 80px;
+  }
 	.topic-header{
     overflow: hidden;
   }
@@ -200,4 +201,10 @@
  .markdown-text img{
     vertical-align: middle;
  }
+ .markdown-text .prettyprint{
+  font-size: 14px;
+  padding: 15px;
+  background-color: #f7f7f8
+ }
+ pre{background:#fee9cc;border:1px dashed #ccc;line-height:22px}code{padding:0;border:none}p code{background:0 0;color:#7f7f7f;margin:0 1px;padding:1px 4px;border-radius:1px}div pre.prettyprint{font-size:14px;border-radius:0;padding:0 15px;border:none;margin:20px -10px;border-width:1px 0;background:#f7f7f7;}
 </style>

@@ -41,4 +41,8 @@
 		margin-bottom: 0;
 		line-height: 22px;
 	}
+
+	.userPanel div>p:first-child{
+		cursor: pointer;
+	}
 </style>
