@@ -68,6 +68,7 @@ export default {
           case "share": temTitle = "分享"; break;
           case "ask": temTitle = "问答"; break;
           case "job": temTitle = "招聘"; break;
+          default: temTitle = "全部";
         }
       }else{
         if(routerName === "message") temTitle = "消息"

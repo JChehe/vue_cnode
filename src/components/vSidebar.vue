@@ -34,7 +34,7 @@
 export default{
 	data(){
 		return {
-      tab: this.$route.query.tab || "all",
+      tab: this.$route.query.tab,
 			itemSet:[
 				[{
 					icon: "&#xe602;",
@@ -125,7 +125,7 @@ export default{
 			this.isShowSidebar = false
 		},
     change(tab){
-      console.log(event.currentTarget.innerText)
+      // console.log(event.currentTarget.innerText)
       if(tab == undefined && event.currentTarget.dataset.view=="logout"){
          this.isShowConfirm = true        
       }
@@ -164,7 +164,11 @@ export default{
   }
   .user{
     text-align: center;
-    padding: 25px 0;
+    padding: 60px 0 25px;
+  }
+  .user img, .user p{
+    cursor: pointer;
+
   }
   .user img{
     width: 64px;
@@ -234,7 +238,7 @@ export default{
   
 
   
-  .v-link-active.tab.active, .v-link-active:not(.tab){
+  .v-link-active.tab.active, .v-link-active:not(.tab),.offcanvas-bar .tab.active{
     background-color: #3B4F6A;
   }
   .user .login{
