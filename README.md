@@ -6,9 +6,9 @@
 
 最近在学习Vue.js，因为实践是一种很好的学习方式，所以利用 Vue.js 和 CNodejs.org 提供的 API 搭建了一个Web APP。
 
-访问地址：http://jchehe.github.io/mystatic/vue_cnode/
-源码地址：https://github.com/JChehe/vue_cnode
-访问二维码：![此处输入图片的描述][1]
+访问地址：http://jchehe.github.io/mystatic/vue_cnode/  
+源码地址：https://github.com/JChehe/vue_cnode  
+访问二维码：![此处输入图片的描述][1]  
 
 在此，也感谢 [@shinygang][2] 的 [用Vue.js编写了cnodejs.org的h5客户端(webapp)][3] 项目，我从中也学到了一些知识。
 
