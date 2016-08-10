@@ -6,7 +6,7 @@
   url('//at.alicdn.com/t/font_1470153885_631436.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
   url('//at.alicdn.com/t/font_1470153885_631436.svg#iconfont') format('svg'); /* iOS 4.1- */
 }
-                    
+                 
                     
 html{
   -webkit-font-smoothing: antialiased;
@@ -53,6 +53,10 @@ textarea {
     width: 100%;
 }
 
+a:hover, a:active{
+  background-color: transparent;
+  outline: 0
+}
 input[type="text"],
 select {
     height: 30px;

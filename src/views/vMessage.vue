@@ -9,14 +9,13 @@
 				<ul>
 					<li v-for="message in messageType">
 						<div class="header">
+							<div class="right">
+								<p>{{message.reply.create_at | getLastTimeStr true}}</p>
+							</div>
 							<vuserpanel :avatar="message.author.avatar_url">
 								<p slot="one" v-link="{path:'/perinfo/'+message.author.loginname}">{{message.author.loginname}}</p>
 								<p slot="two">在回复中@了你</p>
 							</vuserpanel>
-							
-							<div class="right">
-								<p>{{message.reply.create_at | getLastTimeStr true}}</p>
-							</div>
 						</div>
 						<div class="content">
 							<div class="">

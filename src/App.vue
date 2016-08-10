@@ -123,10 +123,10 @@ export default {
     background-color: rgba(0, 0, 0, .3);
   }
   #app.show-offcanvas main {
-    -webkit-transform: translateX(270px);
-    -ms-transform: translateX(270px);
-    -o-transform: translateX(270px);
-    transform: translateX(270px);
+    -webkit-transform: translateX(235px);
+    -ms-transform: translateX(235px);
+    -o-transform: translateX(235px);
+    transform: translateX(235px);
   }
   
   #app.show-offcanvas .offcanvas-bar {

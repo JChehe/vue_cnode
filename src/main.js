@@ -3,7 +3,7 @@ import App from './App'
 import VueRouter from "vue-router"
 import routerMap from './router'
 import filters from "./filters"
-
+import Fastclick from "fastclick"
 
 Vue.use(VueRouter)
 
@@ -17,6 +17,7 @@ var router = new VueRouter()
 
 routerMap(router)
 
+Fastclick.attach(document.body);
 
 router.beforeEach((transition) => {
   if (transition.to.auth) {

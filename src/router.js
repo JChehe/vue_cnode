@@ -40,8 +40,7 @@ export default (router) => {
       name: " perinfo",
       component: function(resolve) {
           require(['./views/vPerinfo.vue'], resolve);
-      },
-      auth: true
+      }
     },
     "/login": {
       name: " login",

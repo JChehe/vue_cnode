@@ -63,6 +63,7 @@
 	}
 	.confirm-dialog{
 		width: 50%;
+		min-width: 250px;
 		max-width: 360px;
 		margin: 0 auto;
 		position: absolute;
