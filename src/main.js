@@ -19,15 +19,15 @@ routerMap(router)
 
 
 router.beforeEach((transition) => {
-    if (transition.to.auth) {
-        if (localStorage.user_id) {
-            transition.next();
-        } else {
-        	var redirect = encodeURIComponent(transition.to.path)
-            transition.redirect("/login?redirect=" + redirect)
-        }
+  if (transition.to.auth) {
+    if (localStorage.user_id) {
+        transition.next();
     } else {
-        transition.next()
+    	var redirect = encodeURIComponent(transition.to.path)
+        transition.redirect("/login?redirect=" + redirect)
     }
+  } else {
+    transition.next()
+  }
 })
 router.start(App, 'app')

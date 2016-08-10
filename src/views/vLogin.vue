@@ -55,7 +55,6 @@
 					}, (data) => {
 						if(data.success){
 							// alert("验证成功");
-							console.log(data)
 							localStorage.loginname = this.loginname = data.loginname
 							localStorage.avatar_url = this.avatar_url = data.avatar_url
 							localStorage.user_id = data.id
@@ -67,7 +66,6 @@
 						}
 					})
 				}
-
 			}
 		}
 	}

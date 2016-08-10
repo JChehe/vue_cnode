@@ -51,7 +51,6 @@
 		},
 		methods: {
 			newPost(){
-
 				if(this.tabSelected === ""){
 					alert("未选择主题类型")
 				}else if(this.postTitle.trim().length < 10){
@@ -65,7 +64,6 @@
 						content: this.postContent,
 						tab: this.tabSelected
 					}, (data) => {
-						console.log(data)
 						// alert("发帖成功")
 						this.$route.router.go({name:"list"})
 					})

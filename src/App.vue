@@ -57,7 +57,9 @@ export default {
   },
   created: function(){
     var temTitle = "";
-    this.getUnreadCount()
+    if(this.accesstoken.trim()){
+      this.getUnreadCount()
+    }
     this.$route.router.afterEach((transition) => {
       var router = transition.to
       var routerName = router.name.trim()
@@ -117,11 +119,9 @@ export default {
   #app.show-offcanvas .offcanvas{
     visibility: visible;
   }
-  
   #app.show-offcanvas .offcanvas {
     background-color: rgba(0, 0, 0, .3);
   }
-  
   #app.show-offcanvas main {
     -webkit-transform: translateX(270px);
     -ms-transform: translateX(270px);
@@ -135,6 +135,4 @@ export default {
     -o-transform: translateX(0);
     transform: translateX(0);
   }
-  
-
 </style>

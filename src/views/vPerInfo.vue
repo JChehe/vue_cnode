@@ -37,7 +37,6 @@
 <script>
   import api from "../api"
 	import vUserPanel from "../components/vUserPanel"
-
     
 	export default {
 		components: {
@@ -61,31 +60,27 @@
     		required: true
     	}
     },
-   
     created(){
     	this.isShowSidebar = false
-    	console.log(this.$route.params.loginname)
-      this.getUserInfo()
+      	this.getUserInfo()
     },
     route: {
     	data(transition){ //  监听
 	    	this.getUserInfo()
 	    }	
     },
- 
     methods: {
 			changeItem(itemIndex){
 				this.activeItem = itemIndex
 			},
 			getUserInfo(){
 				api.user.getUserInfo({
-	        loginname:  this.$route.params.loginname || this.loginname,
-	      }, (data) => {
-	        this.userInfo = data.data
-	        this.tabDataSet.$set(0, data.data.recent_topics)
-	        this.tabDataSet.$set(1, data.data.recent_replies)
-	        console.log(data.data)
-	      })
+      		loginname:  this.$route.params.loginname || this.loginname,
+    		}, (data) => {
+        	this.userInfo = data.data
+        	this.tabDataSet.$set(0, data.data.recent_topics)
+        	this.tabDataSet.$set(1, data.data.recent_replies)
+    		})
 			}
 		}
 	}
@@ -119,7 +114,6 @@
 	.tab-nav{
 		padding: 0;
 		text-align: center;
-		/*overflow: hidden;*/
 	}
 	.tab-nav li{
 		float: left;
@@ -177,38 +171,38 @@
 		top: 5px;
 	}
 	.left{
-	 	float: left;
-	 	overflow: hidden;
-  	 }
+		float: left;
+		overflow: hidden;
+	}
 
-  	 .left img{
-  	 	width: 44px;
-  	 	height: 44px;
-  	 	vertical-align: bottom;
-  	 }
-  	 .post-list .info{
-  	 	font-size: 14px;
-  	 }
-  	 .left>div{
-  	 	float: right;
-  	 	margin-left: 6px;
-  	 }
-  	 .info p{
-  	 	color: #34495e;
-  	 	line-height: 1.6;
-  	 }
-  	 .right strong{
-  	 	color: #42b983
-  	 }
-  	 .right p{
-  	 	margin-bottom: 0;
-  	 }
-  	 .related-topic{
-  	 	background-color: #f0f0f0;
-  	 	padding: 5px;
-  	 	margin:10px 5px;
-  	 	border-radius: 5px;
-  	 }
+	.left img{
+		width: 44px;
+		height: 44px;
+		vertical-align: bottom;
+	}
+	.post-list .info{
+		font-size: 14px;
+	}
+	.left>div{
+		float: right;
+		margin-left: 6px;
+	}
+	.info p{
+		color: #34495e;
+		line-height: 1.6;
+	}
+	.right strong{
+		color: #42b983
+	}
+	.right p{
+		margin-bottom: 0;
+	}
+	.related-topic{
+		background-color: #f0f0f0;
+		padding: 5px;
+		margin:10px 5px;
+		border-radius: 5px;
+	}
 </style>
 
 <style>

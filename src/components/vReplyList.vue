@@ -50,7 +50,6 @@ export default {
 		replies: {
 			type: Array,
 			required: true
-			// default: []
 		},
     accesstoken: {
       type: String,
@@ -59,8 +58,13 @@ export default {
     topicId: {
       type: String,
       required: true
+    },
+    loginname: {
+      type: String,
+      required: true
     }
 	},
+
 	methods: {
 		toggleReply(index){
       
@@ -72,7 +76,15 @@ export default {
       })
       reply.isShowReply = !reply.isShowReply
 		},
+
     replyToComment(index){
+      if(!this.$root.isLogin){
+        var link = "/login?redirect=" + encodeURIComponent(this.$route.path)
+        this.$route.router.go(link)
+        return;
+      }
+
+
       var replyId = this.replies[index].id
 
       api.reply.newReply({
@@ -86,24 +98,35 @@ export default {
           this.$parent.getTopic(this.topicId)
         }
       })
-      // console.log(reply)
     },
     toggleUps(index){
-      var reply = this.replies[index]
+      if(!this.$root.isLogin){
+        var link = "/login?redirect=" + encodeURIComponent(this.$route.path)
+        this.$route.router.go(link)
+        return;
+      }
 
-      api.reply.ups({
-        reply_id: reply.id,
-        accesstoken: this.accesstoken
-      }, (data) => {
-        if(data.success){
-          if(data.action === "down"){
-            var index = reply.ups.indexOf(this.topicId);
-            reply.ups.splice(index, 1)
-          }else{
-            reply.ups.push(this.topicId);
+      
+      var reply = this.replies[index]
+      
+      if(this.loginname !== reply.author.loginname){
+        api.reply.ups({
+          reply_id: reply.id,
+          accesstoken: this.accesstoken
+        }, (data) => {
+          if(data.success){
+            if(data.action === "down"){
+              var index = reply.ups.indexOf(this.topicId);
+              reply.ups.splice(index, 1)
+            }else{
+              reply.ups.push(this.topicId);
+            }
           }
-        }
-      })
+        })
+      }else{
+        alert("不能为自己点赞哦。^_^")
+      }
+      
     }
 	}
 }

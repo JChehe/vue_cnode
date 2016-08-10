@@ -16,7 +16,7 @@
     <div class="topic-content">
       {{{topic.content}}}
     </div>
-    <vreplylist :replies="topic.replies" :topic-id="topic.id" :accesstoken="accesstoken"></vreplylist>
+    <vreplylist :replies="topic.replies" :topic-id="topic.id" :accesstoken="accesstoken" :loginname="loginname"></vreplylist>
     <div>
       <form @submit.prevent="replyHandler" class="reply-form">
         <textarea v-model="replyContent"></textarea>
@@ -46,15 +46,10 @@
         type: String,
         reuqired: true,
         twoWay: true
-      }
-    },
-   
-		created(){
-        // this.getTopic()
-		},
-    watch: {
-      topicId(){
-        
+      },
+      loginname: {
+        type: String,
+        reuqired: true
       }
     },
     route: {
@@ -83,7 +78,6 @@
             reply.isShowReply = false
           })
           this.topic = data.data
-          console.log(this.topic)
         })
       },
       replyHandler(){

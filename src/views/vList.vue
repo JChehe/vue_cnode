@@ -43,12 +43,9 @@
 				twoWay: true
 			}
 		},
-		ready(){
-		},
 		route: {
 			data(transition){
 				var query = transition.to.query;
-				console.log(transition.to)
 				if(transition.to.name === "list"){
 					this.limit = 30
 					this.tab = query.tab
@@ -73,13 +70,10 @@
 				}
 				return name;
 			},
-			
 			getTopicList(opts){
 				if (opts == undefined){
 					opts = {}
 				}
-
-
 				api.topic.getTopicList({
 					tab: opts.tab || this.tab,
 					page: opts.page || this.page,
@@ -96,15 +90,12 @@
 				})
 			},
 			getMoreTopic(){
-
 				if(!this.isLoading){
 					this.isLoading = true
-					
 					this.limit += 30
 					this.getTopicList({tab: this.tab})
 				}
 			}
-
 		}
 	}
 </script>

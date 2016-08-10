@@ -125,7 +125,6 @@ export default{
 			this.isShowSidebar = false
 		},
     change(tab){
-      // console.log(event.currentTarget.innerText)
       if(tab == undefined && event.currentTarget.dataset.view=="logout"){
          this.isShowConfirm = true        
       }
@@ -256,7 +255,7 @@ export default{
     animation: shake 2.5s linear infinite;
   }
 
-@keyframes shake{
+  @keyframes shake{
     0%,100%{
       transform: rotateZ(0deg);
     }

@@ -33,11 +33,6 @@
 				twoWay: true
 			}
 		},
-		watch :{
-			isShowConfirm(){
-				console.log("confirm")
-			}
-		},
 		methods: {
 			hide(){
 				this.isShowConfirm = false

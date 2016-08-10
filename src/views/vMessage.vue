@@ -77,9 +77,7 @@ import vUserPanel from "../components/vUserPanel"
 				api.message.getMessage({
 					accesstoken: this.accesstoken
 				}, (data) => {
-					// this.allMessages = data.data
 					Object.keys(data.data).forEach((item, index)=>{
-						console.log(index)
 						this.allMessages.$set(index, data.data[item])
 					})
 				})
