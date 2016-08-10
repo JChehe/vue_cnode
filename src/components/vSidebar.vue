@@ -135,7 +135,7 @@ export default{
       var redirect = this.$route.query.redirect
       if(this.$route.path!=="login" && !redirect){
         link = "/login?redirect=" + encodeURIComponent(this.$route.path)
-          this.$route.router.go(link)
+        this.$route.router.go(link)
       }else{
         this.isShowSidebar = false
       }

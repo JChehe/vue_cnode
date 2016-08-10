@@ -57,7 +57,7 @@ export default {
   },
   created: function(){
     var temTitle = "";
-    if(this.accesstoken.trim()){
+    if(this.accesstoken){
       this.getUnreadCount()
     }
     this.$route.router.afterEach((transition) => {
