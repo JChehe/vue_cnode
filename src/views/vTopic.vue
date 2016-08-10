@@ -2,16 +2,14 @@
 	<div>
     <div class="topic-header">
     	<h3>{{topic.title}}</h3>
-      <vuserpanel :avatar="topic.author.avatar_url">
-            <p slot="one">{{topic.author.loginname}}</p>
-            <p slot="two">发布时间：{{topic.create_at | getLastTimeStr true}}</p>
-          </vuserpanel>
-
-    
       <div class="right">
         <p class="tab top">{{tabToName(topic.tab)}}</p>
         <p>{{topic.visit_count}}次浏览</p>
       </div>
+      <vuserpanel :avatar="topic.author.avatar_url">
+        <p slot="one">{{topic.author.loginname}}</p>
+        <p slot="two">发布时间：{{topic.create_at | getLastTimeStr true}}</p>
+      </vuserpanel>
     </div>
     <div class="topic-content">
       {{{topic.content}}}
@@ -187,10 +185,10 @@
 </style>
 <style>
   .markdown-text p{
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     white-space: pre-wrap;
     word-wrap: break-word;
-    line-height: 1.7em;
+    line-height: 1.4em;
  }
  .markdown-text img{
     vertical-align: middle;

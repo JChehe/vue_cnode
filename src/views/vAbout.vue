@@ -2,16 +2,16 @@
 	<ul>
 		<li>
 			<h4>关于项目</h4>
-			<p>该项目是我出于学习实践的目的，采用Vue.js，并基于CNodejs.org论坛的API编写的web app。</p>
+			<p>该项目是我出于学习实践的目的，采用Vue.js（1.0），并基于CNodejs.org的API编写的Web App。</p>
 
 		</li>
 		<li>
 			<h4>源码地址</h4>
-			<p><a href="https://git.coding.net/Jcc/vue_blog.git">https://git.coding.net/Jcc/vue_blog.git</a></p>
+			<p><a href="https://github.com/JChehe/vue_cnode" target="_blank">https://github.com/JChehe/vue_cnode</a></p>
 		</li>
 		<li>
 			<h4>意见反馈</h4>
-			<p><a href="https://coding.net/u/Jcc/p/vue_blog/topic">发表意见或者提需求</a></p>
+			<p><a href="https://github.com/JChehe/vue_cnode/issues" target="_blank">发表意见或者提需求</a></p>
 		</li>
 		<li>
 			<h4>当前版本</h4>

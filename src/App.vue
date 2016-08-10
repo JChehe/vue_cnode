@@ -114,7 +114,7 @@ export default {
     width: 100%;
   }
   #content{
-    padding: 60px 10px 10px;
+    padding: 58px 5px 10px;
   }
   #app.show-offcanvas .offcanvas{
     visibility: visible;

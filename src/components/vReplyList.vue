@@ -6,10 +6,6 @@
   	<ul v-if="replies.length > 0">
   		<li v-for="reply in replies">
   			<div class="user">
-  				<vuserpanel :avatar="reply.author.avatar_url">
-            <p slot="one">{{reply.author.loginname}}</p>
-            <p slot="two">回复时间：{{reply.create_at | getLastTimeStr true}}</p>
-          </vuserpanel>
           <div class="right">
           	<div class="like-btn" @click="toggleUps($index)">
           		<i class="iconfont">&#xe60a;</i>{{reply.ups.length}}
@@ -18,6 +14,10 @@
           		<i class="iconfont">&#xe60b;</i>
           	</div>
           </div>
+          <vuserpanel :avatar="reply.author.avatar_url">
+            <p slot="one">{{reply.author.loginname}}</p>
+            <p slot="two">回复时间：{{reply.create_at | getLastTimeStr true}}</p>
+          </vuserpanel>
   			</div>
   			<div class="reply-content">
   				{{{reply.content}}}
@@ -163,9 +163,6 @@ export default {
   .reply-btn{
     margin-top: 2px
   }
-	.reply-list ul{
-		padding: 10px;
-	}
 
 	.reply-list ul li{
 		padding: 6px;

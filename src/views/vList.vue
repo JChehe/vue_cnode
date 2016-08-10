@@ -4,14 +4,14 @@
 			<li v-for="topic in topics" :class="topic.good ? 'top' : (topic.tab || 'unknow')" :id="topic.id" v-link="{name: 'topic', params: {id: topic.id}}">
 				<h3 class="title"><span class="tab">{{tabToName(topic)}}</span>{{topic.title}}</h3>
 				<div class="info">
-					<vuserpanel :avatar="topic.author.avatar_url">
-						<p slot="one" v-link="{path: '/perinfo/' + topic.author.loginname}">{{topic.author.loginname}}</p>
-						<p slot="two">{{topic.create_at | getLastTimeStr true}}</p>
-					</vuserpanel>
 					<div class="right">
 						<p><strong title="回复数">{{topic.reply_count}}</strong> / <span title="阅读数">{{topic.visit_count}}</span></p>
 						<p class="latest_reply_time">{{topic.last_reply_at | getLastTimeStr true}}</p>
 					</div>
+					<vuserpanel :avatar="topic.author.avatar_url">
+						<p slot="one" v-link="{path: '/perinfo/' + topic.author.loginname}">{{topic.author.loginname}}</p>
+						<p slot="two">{{topic.create_at | getLastTimeStr true}}</p>
+					</vuserpanel>
 				</div>
 			</li>
 		</ul>
@@ -111,7 +111,7 @@
   	 
   	 .topic-list .tab{
   	 	border-radius: 4px;
-  	 	padding: 4px 6px;
+  	 	padding: 3px 6px;
   	 	color: #fff;
   	 	font-size: 14px;
   	 	margin-right: 6px;

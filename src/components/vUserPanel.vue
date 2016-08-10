@@ -21,7 +21,7 @@
 
 <style scoped>
 	div{
-		float: left;
+		/*float: left;*/
 	}
 	img{
 		float: left;

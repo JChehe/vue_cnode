@@ -165,6 +165,7 @@ export default{
     text-align: center;
     padding: 60px 0 25px;
   }
+
   .user img, .user p{
     cursor: pointer;
 
@@ -188,21 +189,34 @@ export default{
   }
   .offcanvas .logo {
     text-align: center;
-    padding: 14px 24px;
+    padding: 14px 0;
     position: absolute;
     bottom: 0;
   }
-  
+
   .offcanvas .logo img {
     width: 60%;
   }
-  
+  @media all and (max-width: 435px){
+    .user{
+      padding: 20px 0 0;
+    }
+    .user img+p{
+      margin: 0 auto;
+    }
+    .offcanvas .logo{
+      padding: 5px 0;
+    }
+    .offcanvas .logo img {
+      width: 45%;
+    }
+  }
   .offcanvas-bar {
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
-    width: 270px;
+    width: 235px;
     background-color: #24344B;
     max-width: 100%;
     -webkit-transform: translateX(-100%);
