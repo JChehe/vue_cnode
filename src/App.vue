@@ -4,7 +4,7 @@
     <main>
       <vheader :title="title" :is-show-sidebar.sync="isShowSidebar" :show.sync="showConfirm"></vheader>
       <div id="content">
-        <router-view :is-show-sidebar.sync="isShowSidebar" :is-login.sync="isLogin" :avatar_url.sync="avatar_url" :loginname.sync="loginname" :accesstoken.sync="accesstoken" :unread-count.sync="unreadCount"></router-view>
+        <router-view :is-show-sidebar.sync="isShowSidebar" :is-login.sync="isLogin" :avatar_url.sync="avatar_url" :loginname.sync="loginname" :accesstoken.sync="accesstoken" :unread-count.sync="unreadCount" keep-alive></router-view>
       </div>
     </main>
     <vconfirm :is-show-confirm.sync="isShowConfirm" :is-show-sidebar.sync="isShowSidebar" :is-login.sync="isLogin">
@@ -52,7 +52,8 @@ export default {
       loginname: localStorage.loginname,
       avatar_url: localStorage.avatar_url,
       accesstoken: localStorage.accesstoken,
-      unreadCount: 0
+      unreadCount: 0,
+      scrollTop: 0
     }
   },
   created: function(){
@@ -60,7 +61,11 @@ export default {
     if(this.accesstoken){
       this.getUnreadCount()
     }
+    // this.$route.router.beforeEach((transition) => {
+    //   this.scrollTop = 0
+    // })
     this.$route.router.afterEach((transition) => {
+     
       var router = transition.to
       var routerName = router.name.trim()
       if(routerName === "list"){
@@ -80,15 +85,28 @@ export default {
         else if(routerName === "newtopic") temTitle = "发帖"
       }
       this.title = temTitle
+      this.scrollTop = 0
     })
+  },
+  compiled: function(){
+    console.log("aasdadasds")
   },
   watch:{
     isShowSidebar: function(){
       if(this.isShowSidebar){
+        this.scrollTop = document.body.scrollTop
+        console.log(document.body.scrollTop)
+        document.body.style.marginTop = -this.scrollTop + "px"
+        document.querySelector("header").style.marginTop = this.scrollTop + "px"
         document.body.style.position = "fixed"
       }else{
-        setTimeout(function(){
+
+        setTimeout(() => {
           document.body.style.position = "static"
+          document.querySelector("header").style.marginTop = 0 + "px"
+          document.body.style.marginTop = 0 + "px"
+          document.body.scrollTop = this.scrollTop
+
         }, 300)
       }
     }

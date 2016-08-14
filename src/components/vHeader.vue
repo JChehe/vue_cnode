@@ -42,6 +42,7 @@
     position: fixed;
     left: 0;
     right: 0;
+    transform: translateZ(0px);
     z-index: 999
   }
   
