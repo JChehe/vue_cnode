@@ -49,10 +49,10 @@
 				if(transition.to.name === "list"){
 					this.limit = 30
 					this.tab = query.tab
-					this.getTopicList({tab: this.tab});
-						this.isShowSidebar = false
-					}
+					this.getTopicList({tab: this.tab})
+					this.isShowSidebar = false
 				}
+			}
 		},
 		
 		methods:{

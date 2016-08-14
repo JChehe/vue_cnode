@@ -18,26 +18,12 @@ import api from "./api"
 
 import vheader from './components/vHeader'
 import vsidebar from './components/vSidebar'
-import vlist from './views/vList'
-import vpost from './views/vTopic'
-import vabout from './views/vAbout'
-import vmessage from './views/vMessage'
-import vperinfo from './views/vPerInfo'
-import vnewpost from './views/vNewTopic'
-import vlogin from './views/vLogin'
 import vconfirm from './components/vConfirm'
 
 export default {
   components: {
     vheader: vheader,
     vsidebar: vsidebar,
-    vlist: vlist,
-    vpost: vpost,
-    vabout: vabout,
-    vmessage: vmessage,
-    vperinfo: vperinfo,
-    vnewpost: vnewpost,
-    vlogin: vlogin,
     vconfirm: vconfirm
   },
   data: function(){
@@ -61,9 +47,6 @@ export default {
     if(this.accesstoken){
       this.getUnreadCount()
     }
-    // this.$route.router.beforeEach((transition) => {
-    //   this.scrollTop = 0
-    // })
     this.$route.router.afterEach((transition) => {
      
       var router = transition.to
@@ -85,6 +68,7 @@ export default {
         else if(routerName === "newtopic") temTitle = "发帖"
       }
       this.title = temTitle
+      this.isShowSidebar = false
       this.scrollTop = 0
     })
   },
