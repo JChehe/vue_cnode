@@ -30,29 +30,29 @@ npm run build
 ```
 
 ### 截图
+
+- 首页_列表页  
 ![list][4]
-- 首页_列表页 - 
 
+- 侧边栏  
 ![sidebar][5]
-- 侧边栏 -
 
-
+- 帖子  
 ![topic][6]
-- 帖子 -
 
+- 发布新帖  
 ![newpost][7]
-- 新帖 -
 
-![perinfo][8]
-- 个人信息 -
+- 个人信息  
+![profile][8]
 
 ...
 
-  [1]: http://7xq7nb.com1.z0.glb.clouddn.com/vue_cnode_ercode.jpg
+  [1]: https://blog-1251477229.cos.ap-chengdu.myqcloud.com/vue_cnode/vue_cnode_qrcode.jpg
   [2]: https://cnodejs.org/user/shinygang
   [3]: https://cnodejs.org/topic/565c4473d0bc14ae279399fe
-  [4]: http://7xq7nb.com1.z0.glb.clouddn.com/vue_cnode180533777122538325.jpg
-  [5]: http://7xq7nb.com1.z0.glb.clouddn.com/vue_cnode111695178489359805.jpg
-  [6]: http://7xq7nb.com1.z0.glb.clouddn.com/vue_cnode178894179846601990.jpg
-  [7]: http://7xq7nb.com1.z0.glb.clouddn.com/vue_cnode95128911849950208.jpg
+  [4]: https://blog-1251477229.cos.ap-chengdu.myqcloud.com/vue_cnode/list.jpg
+  [5]: https://blog-1251477229.cos.ap-chengdu.myqcloud.com/vue_cnode/sidebar.jpg
+  [6]: https://blog-1251477229.cos.ap-chengdu.myqcloud.com/vue_cnode/detail.jpg
+  [7]: https://blog-1251477229.cos.ap-chengdu.myqcloud.com/vue_cnode/profile.jpg
   [8]: http://7xq7nb.com1.z0.glb.clouddn.com/vue_cnode1.jpg
