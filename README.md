@@ -54,5 +54,5 @@ npm run build
   [4]: https://blog-1251477229.cos.ap-chengdu.myqcloud.com/vue_cnode/list.jpg
   [5]: https://blog-1251477229.cos.ap-chengdu.myqcloud.com/vue_cnode/sidebar.jpg
   [6]: https://blog-1251477229.cos.ap-chengdu.myqcloud.com/vue_cnode/detail.jpg
-  [7]: https://blog-1251477229.cos.ap-chengdu.myqcloud.com/vue_cnode/profile.jpg
-  [8]: http://7xq7nb.com1.z0.glb.clouddn.com/vue_cnode1.jpg
+  [7]: https://blog-1251477229.cos.ap-chengdu.myqcloud.com/vue_cnode/edit.jpg
+  [8]: https://blog-1251477229.cos.ap-chengdu.myqcloud.com/vue_cnode/profile.jpg
